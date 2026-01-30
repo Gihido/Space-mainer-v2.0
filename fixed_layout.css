@@ -1,0 +1,365 @@
+/* ===== ИСПРАВЛЕНИЯ ДЛЯ ВСЕХ ПРОБЛЕМ ИГРЫ ===== */
+
+/* Исправление 1: Правильное расположение интерфейсов информации и престижных улучшений */
+#info-section, #prestige-functions-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: linear-gradient(135deg, var(--space-dark) 0%, var(--space-blue) 50%, var(--space-purple) 100%);
+    display: none;
+}
+
+#info-section.active, #prestige-functions-section.active {
+    display: block;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Исправление 2: Улучшенная видимость для мобильных покупок улучшений */
+.upgrade-node {
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
+    position: relative;
+    z-index: 10;
+}
+
+.upgrade-node:hover {
+    transform: scale(1.05) !important;
+    z-index: 20;
+}
+
+/* Исправление 3: Правильная система престижа */
+.prestige-button {
+    position: relative;
+    z-index: 100;
+}
+
+/* Исправление 4: Устранение черно-прозрачного экрана на ПК */
+body {
+    background: linear-gradient(135deg, var(--space-dark) 0%, var(--space-blue) 50%, var(--space-purple) 100%) !important;
+    background-attachment: fixed;
+    overflow: visible;
+}
+
+.game-container {
+    background: transparent;
+    position: relative;
+    z-index: 10;
+}
+
+/* Исправление 5: Возможность покупки улучшений в дереве */
+.tree-container {
+    position: relative;
+    overflow: auto;
+    touch-action: none;
+    min-height: 500px;
+    z-index: 5;
+}
+
+.upgrade-tree {
+    position: relative;
+    min-width: 2000px;
+    min-height: 2000px;
+    z-index: 1;
+}
+
+/* Исправление 6: Предотвращение двойного клика */
+.planet, .click-button, .upgrade-node, .shop-item, .prestige-function-buy-btn {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: auto;
+}
+
+/* Дополнительные исправления для мобильных устройств */
+@media (max-width: 768px) {
+    .tree-container {
+        min-height: 400px;
+        height: 60vh;
+    }
+    
+    .upgrade-node {
+        min-width: 70px !important;
+        min-height: 70px !important;
+        touch-action: manipulation;
+    }
+    
+    /* Улучшенная видимость мобильных элементов */
+    #info-section, #prestige-functions-section {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        background: linear-gradient(135deg, var(--space-dark) 0%, var(--space-blue) 50%, var(--space-purple) 100%);
+        display: none;
+    }
+}
+
+/* Исправление для правильного переключения секций */
+.content-section {
+    position: relative;
+    z-index: 1;
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+    z-index: 10;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Исправление для навигационной панели */
+.nav-panel {
+    position: relative;
+    z-index: 100;
+}
+
+.nav-btn {
+    position: relative;
+    z-index: 101;
+}
+
+/* Улучшенная видимость для всех интерактивных элементов */
+.upgrade-node, .shop-item, .achievement-item, .prestige-function {
+    pointer-events: auto;
+    z-index: 10;
+}
+
+/* Исправление для модальных окон */
+.modal-overlay {
+    z-index: 10000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: none;
+}
+
+.modal-overlay.active {
+    display: block;
+}
+
+/* Исправление для мобильного улучшения панели */
+.mobile-upgrade-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10001;
+    display: none;
+}
+
+.mobile-upgrade-panel.active {
+    display: flex;
+}
+
+/* Исправление для правильного отображения дерева улучшений */
+.upgrade-connections {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.upgrade-node {
+    position: absolute;
+    pointer-events: auto;
+    z-index: 10;
+}
+
+/* Улучшенная производительность для мобильных устройств */
+@media (hover: none) and (pointer: coarse) {
+    .upgrade-node, .shop-item, .prestige-function {
+        touch-action: manipulation;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+
+/* Исправление для предотвращения проблем с прокруткой */
+body {
+    height: 100vh;
+    overflow: auto;
+}
+
+.game-container {
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Исправление для корректного отображения всех секций */
+#upgrades-section, #shop-section, #achievements-section, #stats-section, #prestige-section, #inventory-section {
+    position: relative;
+    z-index: 1;
+    min-height: 600px;
+}
+
+/* Исправление для правильного отображения престижных функций */
+#prestige-functions-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--space-dark) 0%, var(--space-blue) 50%, var(--space-purple) 100%);
+    z-index: 1000;
+    display: none;
+}
+
+#prestige-functions-section.active {
+    display: block;
+}
+
+/* Исправление для мобильного раздела информации */
+#info-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--space-dark) 0%, var(--space-blue) 50%, var(--space-purple) 100%);
+    z-index: 1000;
+    display: none;
+}
+
+#info-section.active {
+    display: block;
+}
+
+/* Улучшенные стили для предотвращения конфликта z-index */
+.game-content {
+    position: relative;
+    z-index: 10;
+}
+
+.content-section {
+    position: relative;
+    z-index: 1;
+}
+
+.content-section.active {
+    z-index: 10;
+    position: relative;
+}
+
+/* Исправление для корректного отображения дерева улучшений */
+.tree-container {
+    position: relative;
+    overflow: hidden;
+    touch-action: none;
+    min-height: 500px;
+    height: 70vh;
+    z-index: 1;
+}
+
+.upgrade-tree {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: 0 0;
+    z-index: 1;
+}
+
+/* Улучшенные стили для мобильных устройств */
+@media (max-width: 768px) {
+    .tree-container {
+        height: 60vh;
+        min-height: 400px;
+    }
+    
+    .upgrade-node {
+        min-width: 60px;
+        min-height: 60px;
+    }
+}
+
+/* Исправление для корректного отображения всех элементов интерфейса */
+*[style*="opacity: 0"], *[style*="visibility: hidden"], *[style*="display: none"] {
+    transition: opacity 0.3s, visibility 0.3s, display 0.3s;
+}
+
+/* Исправление для предотвращения двойного клика */
+.click-button, .upgrade-node, .shop-item, .prestige-function-buy-btn {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Улучшенная видимость для всех интерактивных элементов */
+.nav-btn, .click-button, .shop-item, .upgrade-node, .achievement-item, .prestige-function-buy-btn {
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+/* Исправление для правильного отображения всех разделов */
+#upgrades-section, #shop-section, #achievements-section, #stats-section, #prestige-section, #inventory-section, #info-section, #prestige-functions-section {
+    display: none;
+    position: relative;
+    z-index: 1;
+}
+
+#upgrades-section.active, #shop-section.active, #achievements-section.active, #stats-section.active, #prestige-section.active, #inventory-section.active, #info-section.active, #prestige-functions-section.active {
+    display: block;
+    z-index: 10;
+}
+
+/* Исправление для корректной работы дерева улучшений */
+.upgrade-node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: visible;
+}
+
+/* Исправление для мобильного улучшения дерева */
+@media (max-width: 400px) {
+    .tree-container {
+        height: 50vh;
+        min-height: 300px;
+    }
+    
+    .upgrade-node {
+        min-width: 50px;
+        min-height: 50px;
+        padding: 5px;
+    }
+}

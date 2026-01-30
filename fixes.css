@@ -1,0 +1,121 @@
+/* Fixes for various issues */
+
+/* Fix 1: Make sure sections properly transition and don't overlap */
+.content-section {
+    position: relative;
+    z-index: 1;
+}
+
+.content-section.active {
+    z-index: 10;
+}
+
+/* Fix 2: Improve mobile upgrade buying functionality */
+.upgrade-node {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
+}
+
+/* Fix 3: Ensure proper styling for prestige functions section */
+#prestige-functions-section {
+    display: none;
+    position: relative;
+    z-index: 5;
+}
+
+#prestige-functions-section.active {
+    display: block;
+    z-index: 15;
+}
+
+/* Fix 4: Fix black/transparent issue on PC by ensuring proper background */
+body {
+    background: linear-gradient(135deg, var(--space-dark) 0%, var(--space-blue) 50%, var(--space-purple) 100%) !important;
+    background-attachment: fixed;
+}
+
+.game-container {
+    background: transparent;
+}
+
+/* Fix 5: Ensure upgrade nodes are clickable and visible */
+.upgrade-node {
+    pointer-events: auto !important;
+}
+
+.upgrade-connections {
+    pointer-events: none;
+}
+
+/* Fix 6: Prevent double-click issues by adding proper debounce */
+.tree-container {
+    touch-action: pan-x pan-y;
+}
+
+/* Additional fixes for mobile compatibility */
+@media (max-width: 768px) {
+    .tree-container {
+        touch-action: pan-x pan-y;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+    .upgrade-node {
+        min-width: 70px !important;
+        min-height: 70px !important;
+        touch-action: manipulation;
+    }
+}
+
+/* Fix for section navigation */
+.nav-btn {
+    z-index: 100;
+}
+
+/* Ensure proper stacking context */
+.game-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Make sure modal overlays work properly */
+.modal-overlay {
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* Improve mobile upgrade panel visibility */
+.mobile-upgrade-panel {
+    z-index: 10001;
+    background: linear-gradient(135deg, var(--space-dark), var(--space-blue));
+    border: 2px solid var(--neon-blue);
+}
+
+/* Fix for the transparent black issue - ensure proper visibility */
+*[style*="opacity: 0"], *[style*="visibility: hidden"], *[style*="display: none"] {
+    transition: opacity 0.3s, visibility 0.3s, display 0.3s;
+}
+
+/* Ensure proper rendering of all sections */
+#info-section, #prestige-functions-section, #inventory-section {
+    display: none;
+}
+
+#info-section.active, #prestige-functions-section.active, #inventory-section.active {
+    display: block;
+}
+
+/* Improve mobile touch targets */
+.nav-btn {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 12px;
+}
+
+/* Fix for double click prevention */
+.planet, .click-button, .upgrade-node, .shop-item, .prestige-function-buy-btn {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
