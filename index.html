@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0, minimum-scale=0.5">
+    <title>Космический майнер | Кликер-игра</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile_improvements.css">
+    <link rel="stylesheet" href="mobile_specific.css">
+    <link rel="stylesheet" href="mobile_fixes.css">
+    <link rel="stylesheet" href="small_screen_fixes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Кнопка скрытия/показа интерфейса -->
+        <button class="toggle-gui-btn" title="Скрыть интерфейс">
+            <i class="fas fa-eye-slash"></i>
+        </button>
+        
+        <!-- Панель навигации -->
+        <nav class="nav-panel">
+            <button class="nav-btn active" data-section="clicker">
+                <i class="fas fa-gamepad"></i>
+                <span>Игра</span>
+            </button>
+            <button class="nav-btn" data-section="upgrades">
+                <i class="fas fa-sitemap"></i>
+                <span>Улучшения</span>
+            </button>
+            <button class="nav-btn" data-section="shop">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Магазин</span>
+            </button>
+            <button class="nav-btn" data-section="achievements">
+                <i class="fas fa-trophy"></i>
+                <span>Достижения</span>
+            </button>
+            <button class="nav-btn" data-section="stats">
+                <i class="fas fa-chart-bar"></i>
+                <span>Статистика</span>
+            </button>
+            <button class="nav-btn" data-section="prestige">
+                <i class="fas fa-star"></i>
+                <span>Престиж</span>
+            </button>
+            <!-- Кнопка профиля будет добавлена через JS -->
+        </nav>
+
+        <!-- Шапка с ресурсами -->
+        <header class="game-header">
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="resource-info">
+                        <div class="resource-name">Кредиты</div>
+                        <div class="resource-value" id="credits-value">100</div>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <div class="resource-info">
+                        <div class="resource-name">Минералы</div>
+                        <div class="resource-value" id="minerals-value">0</div>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="resource-info">
+                        <div class="resource-name">Энергия</div>
+                        <div class="resource-value" id="energy-value">100/100</div>
+                        <div class="energy-bar-container">
+                            <div class="energy-bar" id="energy-bar" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="resource-info">
+                        <div class="resource-name">Престиж</div>
+                        <div class="resource-value" id="prestige-value">0</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="game-content">
+            <!-- Секция кликера -->
+            <section class="content-section active" id="clicker-section">
+                <div class="clicker-container">
+                    <!-- Левая панель будет добавлена через JS -->
+                    <div class="planet-container">
+                        <div class="planet" id="click-planet">
+                            <div class="planet-core"></div>
+                            <div class="planet-rings">
+                                <div class="ring"></div>
+                                <div class="ring"></div>
+                                <div class="ring"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Кнопка добычи (будет скрыта через CSS) -->
+                        <button class="click-button" id="click-button">
+                            <i class="fas fa-hammer"></i>
+                            <span class="click-text">ДОБЫТЬ РЕСУРСЫ</span>
+                            <span class="click-info">+<span id="click-power-value">1</span> за клик</span>
+                        </button>
+                    </div>
+                    
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="stat-label">Автоматически в секунду:</div>
+                            <div class="stat-value" id="auto-income-value">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Максимальная энергия:</div>
+                            <div class="stat-value" id="max-energy-value">100</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Всего кликов:</div>
+                            <div class="stat-value" id="total-clicks-value">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="combo-container">
+                        <div class="combo-label">КОМБО</div>
+                        <div class="combo-display" id="combo-display">x1.0</div>
+                        <div class="combo-bar">
+                            <div class="combo-fill" id="combo-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Секция улучшений (теперь дерево) -->
+            <section class="content-section" id="upgrades-section">
+                <h2><i class="fas fa-sitemap"></i> Дерево технологий</h2>
+                <div class="tree-container" id="tree-container">
+                    <!-- Дерево будет отрисовано здесь -->
+                </div>
+            </section>
+
+            <!-- Секция магазина -->
+            <section class="content-section" id="shop-section">
+                <h2><i class="fas fa-shopping-cart"></i> Магазин бустов</h2>
+                <div class="shop-grid" id="shop-grid">
+                    <!-- Будут заполнены JavaScript -->
+                </div>
+            </section>
+
+            <!-- Секция достижений -->
+            <section class="content-section" id="achievements-section">
+                <h2><i class="fas fa-trophy"></i> Достижения</h2>
+                <div class="achievements-grid" id="achievements-grid">
+                    <!-- Будут заполнены JavaScript -->
+                </div>
+            </section>
+
+            <!-- Секция статистики -->
+            <section class="content-section" id="stats-section">
+                <h2><i class="fas fa-chart-bar"></i> Статистика</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-title">Всего заработано</div>
+                        <div class="stat-number" id="total-earned-stat">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Время игры</div>
+                        <div class="stat-number" id="play-time-stat">00:00:00</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Максимальное комбо</div>
+                        <div class="stat-number" id="max-combo-stat">x1.0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Куплено улучшений</div>
+                        <div class="stat-number" id="upgrades-bought-stat">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Уровень престижа</div>
+                        <div class="stat-number" id="prestige-level-stat">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Достижения</div>
+                        <div class="stat-number" id="achievements-unlocked-stat">0/10</div>
+                    </div>
+                </div>
+                
+                <div class="game-controls">
+                    <button class="control-btn" id="save-btn">
+                        <i class="fas fa-save"></i> Сохранить игру
+                    </button>
+                    <button class="control-btn" id="load-btn">
+                        <i class="fas fa-folder-open"></i> Загрузить игру
+                    </button>
+                    <button class="control-btn" id="reset-btn">
+                        <i class="fas fa-redo"></i> Сбросить игру
+                    </button>
+                </div>
+            </section>
+
+            <!-- Секция престижа -->
+            <section class="content-section" id="prestige-section">
+                <div class="prestige-info">
+                    <h2><i class="fas fa-star"></i> Система престижа</h2>
+                    <p class="prestige-description">
+                        Перезапустите игру с улучшениями! Вы получите очки престижа, 
+                        которые дают постоянные бонусы.
+                    </p>
+                    
+                    <div class="prestige-requirements">
+                        <div class="requirement">
+                            <i class="fas fa-coins"></i>
+                            <span>Требуется: </span>
+                            <span id="prestige-requirement">10000</span> кредитов
+                        </div>
+                        <div class="requirement">
+                            <i class="fas fa-star"></i>
+                            <span>Вы получите: </span>
+                            <span id="prestige-gain">0</span> очков престижа
+                        </div>
+                    </div>
+                    
+                    <button class="prestige-button" id="prestige-button" disabled>
+                        <i class="fas fa-rocket"></i>
+                        <span>ПРЕСТИЖ</span>
+                        <small>Требуется больше кредитов</small>
+                    </button>
+                    
+                    <div class="prestige-bonuses">
+                        <h3>Ваши бонусы престижа:</h3>
+                        <div class="bonuses-list" id="prestige-bonuses">
+                            <!-- Будут заполнены JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Уведомления -->
+        <div class="notifications" id="notifications"></div>
+        
+        <!-- Таймер кулдауна покупок -->
+        <div id="purchase-timer" class="purchase-timer" style="display: none;"></div>
+    </div>
+
+    <!-- Подключаем скрипты -->
+    <script src="game.js"></script>
+    <script src="enhanced_tree_drag.js"></script>
+    
+    <!-- Скрипт для админки -->
+    <script>
+        // Инициализируем игру
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('=== ЗАПУСК КОСМИЧЕСКОГО МАЙНЕРА ===');
+            
+            try {
+                // Создаем экземпляр игры
+                if (!window.game) {
+                    window.game = new SpaceMinerGame();
+                    window.game.init();
+                }
+                
+                // Добавляем таймер кулдауна если его нет
+                if (!document.getElementById('purchase-timer')) {
+                    const timerDiv = document.createElement('div');
+                    timerDiv.id = 'purchase-timer';
+                    timerDiv.className = 'purchase-timer';
+                    timerDiv.style.display = 'none';
+                    document.body.appendChild(timerDiv);
+                }
+                
+                console.log('=== ИГРА УСПЕШНО ЗАПУЩЕНА ===');
+                
+            } catch (error) {
+                console.error('ОШИБКА ПРИ ЗАПУСКЕ ИГРЫ:', error);
+                alert('Произошла ошибка при запуске игры. Пожалуйста, обновите страницу.');
+            }
+        });
+        
+        // Глобальные функции для админки
+        window.adminAddResource = function(type) {
+            const input = document.getElementById(`admin-${type}`);
+            if (input && window.game) {
+                window.game.adminAddResource(type, input.value);
+                input.value = '';
+            }
+        };
+        
+        window.adminSetResource = function(type) {
+            const input = document.getElementById(`admin-${type}`);
+            if (input && window.game) {
+                window.game.adminSetResource(type, input.value);
+                input.value = '';
+            }
+        };
+        
+        window.adminSwitchUser = function() {
+            const input = document.getElementById('admin-username');
+            if (input && window.game) {
+                window.game.adminSwitchUser(input.value);
+                input.value = '';
+            }
+        };
+        
+        window.adminDeleteUser = function() {
+            const input = document.getElementById('admin-username');
+            if (input && window.game) {
+                window.game.adminDeleteUser(input.value);
+                input.value = '';
+            }
+        };
+        
+        window.adminAddMillion = function() {
+            if (window.game) window.game.adminAddMillion();
+        };
+        
+        window.adminMaxUpgrades = function() {
+            if (window.game) window.game.adminMaxUpgrades();
+        };
+        
+        window.adminUnlockAll = function() {
+            if (window.game) window.game.adminUnlockAll();
+        };
+        
+        window.adminResetCurrent = function() {
+            if (window.game) window.game.adminResetCurrent();
+        };
+    </script>
+</body>
+</html>

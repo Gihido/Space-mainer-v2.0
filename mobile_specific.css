@@ -1,0 +1,306 @@
+/* Специфические улучшения для мобильных устройств */
+
+/* Улучшения для очень маленьких экранов */
+@media (max-width: 480px) {
+    /* Упрощенная навигация с иконками вместо текста */
+    .nav-btn span {
+        display: none;
+    }
+    
+    .nav-btn i {
+        font-size: 1.5em;
+        margin-right: 0;
+    }
+    
+    .nav-btn {
+        min-width: calc(50% - 5px);
+        padding: 12px 8px;
+        flex: 1 1 calc(50% - 5px);
+        justify-content: center;
+        text-align: center;
+    }
+    
+    /* Улучшения для дерева улучшений */
+    .tree-container {
+        height: 45vh;
+        min-height: 350px;
+    }
+    
+    .upgrade-node {
+        min-width: 70px;
+        min-height: 70px;
+        padding: 10px;
+    }
+    
+    .upgrade-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1.3em;
+    }
+    
+    /* Улучшения для ресурсов */
+    .resources-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .resource-card {
+        padding: 10px;
+        min-height: 80px;
+    }
+    
+    .resource-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2em;
+    }
+    
+    .resource-info {
+        margin-left: 8px;
+    }
+    
+    .resource-name {
+        font-size: 0.8em;
+    }
+    
+    .resource-value {
+        font-size: 1em;
+    }
+    
+    /* Улучшения для кликера */
+    .planet {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .click-button {
+        width: 100%;
+        max-width: 250px;
+        padding: 15px;
+        font-size: 0.9em;
+    }
+    
+    /* Улучшения для статистики */
+    .stats-row {
+        gap: 10px;
+    }
+    
+    .stat-box {
+        padding: 10px;
+        min-height: 70px;
+    }
+    
+    .stat-label {
+        font-size: 0.8em;
+    }
+    
+    .stat-value {
+        font-size: 1.1em;
+    }
+    
+    /* Улучшения для комбо-индикатора */
+    .combo-container {
+        margin: 15px auto;
+    }
+    
+    .combo-display {
+        font-size: 1.4em;
+    }
+    
+    .combo-label {
+        font-size: 0.9em;
+    }
+}
+
+/* Улучшения для экранов шириной до 400px */
+@media (max-width: 400px) {
+    /* Навигационные кнопки в виде квадратов без текста */
+    .nav-panel {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 1fr;
+        gap: 5px;
+        padding: 8px;
+    }
+    
+    .nav-btn {
+        min-width: auto;
+        padding: 15px 5px;
+        margin: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        aspect-ratio: 1/1; /* Квадратная форма */
+    }
+    
+    .nav-btn span {
+        display: none; /* Скрываем текст */
+    }
+    
+    .nav-btn i {
+        font-size: 1.6em;
+        margin: 0;
+    }
+    
+    .nav-btn {
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+/* Улучшения для экранов шириной до 360px */
+@media (max-width: 360px) {
+    .nav-panel {
+        grid-template-columns: repeat(2, 1fr); /* 2 в ряд для очень маленьких экранов */
+        gap: 3px;
+        padding: 5px;
+    }
+    
+    .nav-btn {
+        padding: 12px 3px;
+    }
+    
+    .nav-btn i {
+        font-size: 1.4em;
+    }
+    
+    .resource-card {
+        padding: 8px;
+        margin-bottom: 6px;
+    }
+    
+    .resource-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 1.1em;
+    }
+    
+    .resource-value {
+        font-size: 0.9em;
+    }
+    
+    .click-button {
+        padding: 12px 15px;
+        font-size: 0.8em;
+    }
+    
+    .planet {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .tree-container {
+        height: 40vh;
+        min-height: 300px;
+    }
+    
+    .upgrade-node {
+        min-width: 65px;
+        min-height: 65px;
+        padding: 8px;
+    }
+    
+    .upgrade-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 1.1em;
+    }
+    
+    .content-section {
+        padding: 8px 6px;
+    }
+    
+    h2 {
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
+}
+
+/* Улучшения для экранов шириной до 560px */
+@media (max-width: 560px) and (min-width: 481px) {
+    .nav-btn {
+        min-width: calc(33.333% - 7px);
+        flex: 1 1 calc(33.333% - 7px); /* 3 кнопки в ряд */
+    }
+    
+    .nav-btn span {
+        font-size: 0.75em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .nav-btn i {
+        font-size: 1.3em;
+    }
+}
+
+/* Фиксированная навигация внизу экрана для мобильных */
+@media (max-width: 768px) {
+    .nav-panel {
+        position: sticky;
+        bottom: 0;
+        z-index: 1000;
+        background: var(--bg-color-dark);
+        border-top: 2px solid var(--neon-blue);
+        padding: 8px 5px;
+        gap: 2px;
+    }
+    
+    .game-content {
+        padding-bottom: 60px; /* Компенсация для фиксированной навигации */
+    }
+    
+    /* Улучшения для профиля */
+    .profile-modal {
+        width: 95%;
+        max-width: none;
+        margin: 10px auto;
+        top: 10px;
+        bottom: 10px;
+        left: 2.5%;
+        right: 2.5%;
+        height: calc(100vh - 20px);
+    }
+    
+    .profile-content {
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+        padding: 10px;
+    }
+    
+    .profile-section {
+        margin-bottom: 15px;
+        padding: 12px;
+    }
+    
+    .profile-btn {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        min-height: 44px;
+    }
+    
+    .admin-controls {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .admin-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .admin-input-group {
+        width: 100%;
+    }
+    
+    .admin-input {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .admin-btn {
+        width: 100%;
+    }
+}

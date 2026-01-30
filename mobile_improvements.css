@@ -1,0 +1,659 @@
+/* Улучшения интерфейса для мобильных устройств */
+
+/* Улучшенные стили для дерева улучшений на мобильных */
+@media (max-width: 768px) {
+    .tree-container {
+        height: 50vh; /* Уменьшаем высоту для лучшей видимости на мобильных */
+        min-height: 400px;
+        touch-action: pan-x pan-y pinch-zoom; /* Позволяет масштабирование и перемещение */
+        overflow: hidden;
+    }
+
+    .upgrade-tree {
+        min-width: 1500px;
+        min-height: 1500px;
+        transform-origin: 0 0; /* Устанавливаем точку масштабирования в начало координат */
+    }
+
+    /* Увеличиваем размеры узлов для удобства тача */
+    .upgrade-node {
+        min-width: 80px;
+        min-height: 80px;
+        padding: 12px;
+        border-radius: 16px;
+        cursor: pointer;
+    }
+
+    .upgrade-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5em;
+    }
+
+    .upgrade-icon-wrapper {
+        font-size: 0.9em;
+    }
+
+    /* Увеличиваем размеры текста для лучшей читаемости */
+    .upgrade-name {
+        font-size: 0.85em;
+        line-height: 1.3;
+    }
+
+    .upgrade-description {
+        font-size: 0.75em;
+    }
+
+    /* Увеличиваем размер tooltip для удобства */
+    .upgrade-tooltip {
+        min-width: 250px;
+        font-size: 0.8em;
+        padding: 12px;
+        border-radius: 12px;
+        max-width: 90vw;
+        position: fixed !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 10000;
+    }
+
+    /* Улучшаем навигационные кнопки */
+    .nav-panel {
+        flex-wrap: wrap; /* Позволяет кнопкам переноситься на новую строку */
+    }
+
+    .nav-btn {
+        min-width: 110px;
+        padding: 15px 10px;
+        margin: 5px;
+    }
+
+    .nav-btn i {
+        font-size: 1.4em;
+    }
+
+    .nav-btn span {
+        font-size: 0.85em;
+    }
+
+    /* Улучшаем кликер */
+    .planet {
+        width: 250px;
+        height: 250px;
+        margin: 20px auto;
+    }
+
+    .click-button {
+        padding: 20px 30px;
+        font-size: 1.1em;
+        width: 90%;
+        max-width: 300px;
+    }
+
+    /* Улучшаем ресурсы на главной панели */
+    .resources-grid {
+        grid-template-columns: 1fr; /* Вертикальный стек на мобильных */
+    }
+
+    .resource-card {
+        padding: 18px;
+        margin-bottom: 12px;
+    }
+
+    .resource-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 1.6em;
+    }
+
+    .resource-value {
+        font-size: 1.4em;
+    }
+
+    /* Улучшаем левую панель */
+    .planet-left-panel {
+        position: static;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 20px;
+        padding: 15px;
+    }
+
+    /* Улучшаем статистику */
+    .stats-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .stat-box {
+        width: 100%;
+    }
+
+    /* Улучшаем комбо индикатор */
+    .combo-container {
+        margin: 20px auto;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Дополнительные улучшения для маленьких экранов */
+    .tree-container {
+        height: 45vh;
+        min-height: 350px;
+    }
+
+    .upgrade-node {
+        min-width: 70px;
+        min-height: 70px;
+        padding: 10px;
+    }
+
+    .upgrade-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1.3em;
+    }
+
+    .nav-panel {
+        flex-wrap: wrap;
+        gap: 2px;
+    }
+
+    .nav-btn {
+        min-width: calc(50% - 5px);
+        padding: 10px 5px;
+        margin: 1px;
+        flex: 1 1 calc(50% - 5px); /* 2 кнопки в ряд */
+    }
+
+    .nav-btn span {
+        display: none; /* Скрываем текст на очень маленьких экранах */
+    }
+
+    .nav-btn i {
+        font-size: 1.5em;
+        margin-right: 0;
+    }
+
+    .nav-btn {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .planet {
+        width: 200px;
+        height: 200px;
+    }
+
+    .resource-card {
+        padding: 12px;
+        margin-bottom: 8px;
+    }
+
+    .resource-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3em;
+    }
+
+    .resource-value {
+        font-size: 1.1em;
+    }
+
+    .click-button {
+        padding: 16px 20px;
+        font-size: 0.9em;
+    }
+
+    .combo-container {
+        max-width: 280px;
+        padding: 10px;
+    }
+
+    /* Улучшения для секций */
+    .content-section {
+        padding: 15px 10px;
+    }
+
+    h2 {
+        font-size: 1.2em;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 360px) {
+    /* Ещё более компактные стили для очень маленьких экранов */
+    .nav-btn {
+        min-width: calc(50% - 5px);
+        padding: 8px 3px;
+        flex: 1 1 calc(50% - 5px);
+    }
+
+    .nav-btn i {
+        font-size: 1.3em;
+    }
+
+    .resource-card {
+        padding: 10px;
+        margin-bottom: 6px;
+    }
+
+    .resource-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+    }
+
+    .resource-value {
+        font-size: 1em;
+    }
+
+    .click-button {
+        padding: 14px 18px;
+        font-size: 0.85em;
+    }
+
+    .planet {
+        width: 180px;
+        height: 180px;
+    }
+
+    .tree-container {
+        height: 40vh;
+        min-height: 300px;
+    }
+
+    .upgrade-node {
+        min-width: 65px;
+        min-height: 65px;
+        padding: 8px;
+    }
+
+    .upgrade-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2em;
+    }
+
+    .content-section {
+        padding: 10px 8px;
+    }
+
+    h2 {
+        font-size: 1.1em;
+        margin-bottom: 12px;
+    }
+}
+
+/* Дополнительно для ширины 560px */
+@media (max-width: 560px) and (min-width: 481px) {
+    .nav-btn {
+        min-width: calc(33.333% - 7px);
+        flex: 1 1 calc(33.333% - 7px); /* 3 кнопки в ряд */
+    }
+
+    .nav-btn span {
+        font-size: 0.75em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .nav-btn i {
+        font-size: 1.3em;
+    }
+}
+
+/* Улучшения для магазина */
+@media (max-width: 768px) {
+    .shop-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .shop-item {
+        padding: 15px;
+        min-height: 120px;
+    }
+
+    .shop-item-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5em;
+    }
+
+    .shop-item-info {
+        flex: 1;
+        padding-left: 12px;
+    }
+
+    .shop-item-cost {
+        font-size: 0.9em;
+    }
+}
+
+/* Улучшения для достижений */
+@media (max-width: 768px) {
+    .achievements-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .achievement-item {
+        padding: 18px;
+        min-height: 100px;
+    }
+
+    .achievement-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5em;
+    }
+
+    .achievement-info {
+        flex: 1;
+        padding-left: 15px;
+    }
+}
+
+/* Улучшения для престижа */
+@media (max-width: 768px) {
+    #prestige-section {
+        padding: 20px;
+    }
+
+    .prestige-button {
+        padding: 20px;
+        font-size: 1.1em;
+        width: 100%;
+        max-width: 300px;
+        margin: 20px auto;
+    }
+
+    .prestige-requirements {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .requirement {
+        width: 100%;
+    }
+}
+
+/* Улучшения для профиля */
+@media (max-width: 768px) {
+    .profile-modal {
+        width: 95%;
+        max-width: 500px;
+        margin: 20px auto;
+        top: 20px;
+        bottom: 20px;
+    }
+
+    .profile-content {
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+        padding: 15px;
+    }
+
+    .profile-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .profile-section {
+        margin-bottom: 20px;
+        padding: 15px;
+    }
+
+    .profile-btn {
+        width: 100%;
+        padding: 12px;
+        margin: 5px 0;
+        min-height: 48px;
+    }
+
+    .profile-user-info {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .profile-stats-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .profile-stat {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-modal {
+        width: 98%;
+        margin: 10px auto;
+        top: 10px;
+        bottom: 10px;
+        left: 1%;
+        right: 1%;
+    }
+
+    .profile-content {
+        padding: 10px;
+    }
+
+    .profile-section h4 {
+        font-size: 1.1em;
+        margin-bottom: 12px;
+    }
+
+    .profile-btn {
+        padding: 10px;
+        font-size: 0.95em;
+    }
+
+    .admin-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .admin-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .admin-input-group {
+        width: 100%;
+    }
+
+    .admin-input {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .admin-btn {
+        width: 100%;
+    }
+}
+
+/* Улучшения для модальных окон */
+@media (max-width: 768px) {
+    .modal {
+        width: 95%;
+        max-width: 500px;
+        margin: 20px auto;
+    }
+
+    .modal-header h2 {
+        font-size: 1.4em;
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal-btn {
+        width: 100%;
+    }
+}
+
+/* Улучшения для тултипов дерева улучшений */
+@media (max-width: 768px) {
+    .upgrade-tooltip {
+        position: fixed;
+        z-index: 10000;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        max-width: 90vw;
+        max-height: 80vh;
+        overflow-y: auto;
+        pointer-events: auto;
+    }
+    
+    .upgrade-node {
+        touch-action: manipulation; /* Позволяет обрабатывать тач события */
+    }
+}
+
+/* Улучшения для доступности */
+@media (hover: none) and (pointer: coarse) {
+    /* Увеличиваем минимальный размер тач-целей для устройств с сенсорным экраном */
+    .nav-btn, .click-button, .shop-item, .upgrade-node, .achievement-item {
+        min-height: 48px;
+        min-width: 48px;
+    }
+}
+
+/* Дополнительные улучшения для маленьких экранов */
+@media (max-width: 560px) {
+    /* Оптимизация навигационной панели */
+    .nav-panel {
+        position: sticky;
+        bottom: 0;
+        z-index: 1000;
+        background: var(--bg-color-dark);
+        border-top: 2px solid var(--neon-blue);
+        padding: 8px 5px;
+        gap: 2px;
+    }
+    
+    .nav-btn {
+        flex: 1 1 auto;
+        min-height: 45px;
+        padding: 8px 5px;
+        margin: 1px;
+        border-radius: 8px;
+        font-size: 0.75em;
+    }
+    
+    .nav-btn i {
+        font-size: 1.4em;
+        display: block;
+        margin: 0 auto 2px auto;
+    }
+    
+    .nav-btn span {
+        display: none;
+    }
+    
+    .nav-btn.active {
+        transform: scale(1.05);
+    }
+    
+    /* Улучшения для ресурсов */
+    .resources-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .resource-card {
+        padding: 10px;
+        min-height: 80px;
+    }
+    
+    .resource-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2em;
+    }
+    
+    .resource-info {
+        margin-left: 8px;
+    }
+    
+    .resource-name {
+        font-size: 0.8em;
+    }
+    
+    .resource-value {
+        font-size: 1em;
+    }
+    
+    /* Улучшения для основного контента */
+    .game-content {
+        padding-bottom: 60px; /* Добавляем отступ для фиксированной навигации */
+    }
+    
+    /* Улучшения для кликер-секции */
+    .clicker-container {
+        gap: 15px;
+    }
+    
+    .planet-container {
+        min-height: 300px;
+    }
+    
+    .planet {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .click-button {
+        width: 100%;
+        max-width: 250px;
+        padding: 15px;
+        font-size: 0.9em;
+    }
+    
+    /* Улучшения для статистики */
+    .stats-row {
+        gap: 10px;
+    }
+    
+    .stat-box {
+        padding: 10px;
+        min-height: 70px;
+    }
+    
+    .stat-label {
+        font-size: 0.8em;
+    }
+    
+    .stat-value {
+        font-size: 1.1em;
+    }
+    
+    /* Улучшения для комбо-индикатора */
+    .combo-container {
+        margin: 15px auto;
+    }
+    
+    .combo-display {
+        font-size: 1.4em;
+    }
+    
+    .combo-label {
+        font-size: 0.9em;
+    }
+}

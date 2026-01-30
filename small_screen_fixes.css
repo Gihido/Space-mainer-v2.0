@@ -1,0 +1,399 @@
+/* Дополнительные исправления для маленьких экранов */
+
+/* Улучшения для экранов 300px и меньше */
+@media screen and (max-width: 300px) {
+    .resources-grid {
+        grid-template-columns: 1fr !important;
+        gap: 5px !important;
+    }
+
+    .resource-card {
+        padding: 5px !important;
+        min-height: 50px !important;
+        flex-direction: row !important;
+        align-items: center !important;
+    }
+
+    .resource-icon {
+        width: 20px !important;
+        height: 20px !important;
+        font-size: 0.8em !important;
+    }
+
+    .resource-info {
+        margin-left: 5px !important;
+    }
+
+    .resource-name {
+        font-size: 0.55em !important;
+        margin-bottom: 2px !important;
+    }
+
+    .resource-value {
+        font-size: 0.7em !important;
+    }
+
+    .energy-bar-container {
+        margin-top: 3px !important;
+        height: 5px !important;
+    }
+
+    .nav-panel {
+        gap: 2px !important;
+        padding: 5px !important;
+    }
+
+    .nav-btn {
+        min-width: calc(50% - 2px) !important;
+        padding: 8px 2px !important;
+        margin: 1px !important;
+        flex: 1 1 calc(50% - 2px) !important;
+    }
+
+    .nav-btn i {
+        font-size: 1.2em !important;
+    }
+
+    .clicker-container {
+        padding: 10px !important;
+        gap: 6px !important;
+    }
+
+    .planet {
+        width: 90px !important;
+        height: 90px !important;
+        margin: 5px auto !important;
+    }
+
+    .click-button {
+        padding: 5px 8px !important;
+        font-size: 0.65em !important;
+        max-width: 140px !important;
+    }
+
+    .click-text {
+        font-size: 0.8em !important;
+    }
+
+    .click-info {
+        font-size: 0.7em !important;
+    }
+
+    .stats-row {
+        flex-direction: column !important;
+        gap: 6px !important;
+    }
+
+    .stat-box {
+        padding: 3px !important;
+        min-height: 40px !important;
+        width: 100% !important;
+    }
+
+    .stat-label {
+        font-size: 0.55em !important;
+    }
+
+    .stat-value {
+        font-size: 0.75em !important;
+    }
+
+    .combo-container {
+        margin: 8px auto !important;
+        max-width: 200px !important;
+        padding: 6px !important;
+    }
+
+    .combo-label {
+        font-size: 0.7em !important;
+    }
+
+    .combo-display {
+        font-size: 0.9em !important;
+    }
+
+    .combo-bar {
+        height: 6px !important;
+    }
+}
+
+/* Улучшения для экранов 350px и меньше */
+@media screen and (max-width: 350px) {
+    .resources-grid {
+        gap: 6px !important;
+    }
+
+    .resource-card {
+        padding: 6px !important;
+        min-height: 55px !important;
+    }
+
+    .resource-icon {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 0.9em !important;
+    }
+
+    .resource-info {
+        margin-left: 6px !important;
+    }
+
+    .resource-name {
+        font-size: 0.6em !important;
+    }
+
+    .resource-value {
+        font-size: 0.75em !important;
+    }
+
+    .nav-btn {
+        min-width: calc(50% - 3px) !important;
+        padding: 9px 3px !important;
+        margin: 1px !important;
+        flex: 1 1 calc(50% - 3px) !important;
+    }
+
+    .nav-btn i {
+        font-size: 1.25em !important;
+    }
+
+    .clicker-container {
+        padding: 12px !important;
+        gap: 7px !important;
+    }
+
+    .planet {
+        width: 100px !important;
+        height: 100px !important;
+    }
+
+    .click-button {
+        padding: 6px 10px !important;
+        font-size: 0.7em !important;
+        max-width: 150px !important;
+    }
+
+    .stat-box {
+        padding: 4px !important;
+        min-height: 45px !important;
+    }
+
+    .stat-label {
+        font-size: 0.6em !important;
+    }
+
+    .stat-value {
+        font-size: 0.8em !important;
+    }
+
+    .combo-display {
+        font-size: 1em !important;
+    }
+}
+
+/* Улучшения для экранов 400px и меньше */
+@media screen and (max-width: 400px) {
+    .resources-grid {
+        gap: 7px !important;
+    }
+
+    .resource-card {
+        padding: 8px !important;
+        min-height: 60px !important;
+    }
+
+    .resource-icon {
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 1em !important;
+    }
+
+    .resource-info {
+        margin-left: 7px !important;
+    }
+
+    .resource-name {
+        font-size: 0.65em !important;
+    }
+
+    .resource-value {
+        font-size: 0.85em !important;
+    }
+
+    .nav-btn {
+        min-width: calc(50% - 4px) !important;
+        padding: 10px 4px !important;
+        margin: 2px !important;
+        flex: 1 1 calc(50% - 4px) !important;
+    }
+
+    .clicker-container {
+        padding: 15px !important;
+        gap: 8px !important;
+    }
+
+    .planet {
+        width: 110px !important;
+        height: 110px !important;
+    }
+
+    .click-button {
+        padding: 8px 12px !important;
+        font-size: 0.75em !important;
+        max-width: 170px !important;
+    }
+
+    .stat-box {
+        padding: 5px !important;
+        min-height: 50px !important;
+    }
+
+    .stat-label {
+        font-size: 0.65em !important;
+    }
+
+    .stat-value {
+        font-size: 0.85em !important;
+    }
+}
+
+/* Улучшения для дерева улучшений на маленьких экранах */
+@media screen and (max-width: 400px) {
+    .tree-container {
+        min-height: 280px !important;
+        height: 40vh !important;
+    }
+
+    .tree-controls {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 100 !important;
+        background: rgba(26, 31, 56, 0.95) !important;
+        backdrop-filter: blur(10px) !important;
+        border-radius: 10px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .tree-stats {
+        display: none !important; /* Скрываем статистику на самых маленьких экранах */
+    }
+
+    .upgrade-tree {
+        min-width: 2000px !important;
+        min-height: 2000px !important;
+        transform-origin: 0 0 !important;
+    }
+
+    .upgrade-node {
+        min-width: 60px !important;
+        min-height: 60px !important;
+        width: 60px !important;
+        height: 60px !important;
+        padding: 8px !important;
+        border-radius: 12px !important;
+    }
+
+    .upgrade-icon {
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 1.2em !important;
+    }
+
+    .upgrade-name {
+        font-size: 0.8em !important;
+        line-height: 1.2 !important;
+    }
+
+    .upgrade-description {
+        font-size: 0.7em !important;
+    }
+
+    .upgrade-tooltip {
+        min-width: 200px !important;
+        font-size: 0.75em !important;
+        padding: 10px !important;
+        border-radius: 10px !important;
+        max-width: 85vw !important;
+    }
+}
+
+/* Улучшения для очень маленьких экранов */
+@media screen and (max-width: 300px) {
+    .tree-container {
+        min-height: 220px !important;
+        height: 35vh !important;
+    }
+
+    .upgrade-tree {
+        min-width: 2500px !important;
+        min-height: 2500px !important;
+        transform: scale(0.5) !important;
+        transform-origin: 0 0 !important;
+    }
+
+    .upgrade-node {
+        min-width: 50px !important;
+        min-height: 50px !important;
+        width: 50px !important;
+        height: 50px !important;
+        padding: 5px !important;
+    }
+
+    .upgrade-icon {
+        width: 25px !important;
+        height: 25px !important;
+        font-size: 1em !important;
+    }
+
+    .upgrade-name {
+        font-size: 0.7em !important;
+    }
+
+    .upgrade-description {
+        font-size: 0.6em !important;
+    }
+
+    .upgrade-tooltip {
+        min-width: 160px !important;
+        font-size: 0.65em !important;
+        padding: 6px !important;
+    }
+}
+
+/* Улучшения для сенсорных устройств */
+@media (hover: none) and (pointer: coarse) {
+    .tree-container {
+        touch-action: none !important;
+    }
+
+    .upgrade-node,
+    .upgrade-tree {
+        touch-action: manipulation !important;
+        -webkit-touch-callout: none !important;
+        -webkit-user-select: none !important;
+        -khtml-user-select: none !important;
+        -moz-user-select: none !important;
+        -ms-user-select: none !important;
+        user-select: none !important;
+    }
+
+    .tree-container {
+        cursor: grab !important;
+    }
+
+    .tree-container:active {
+        cursor: grabbing !important;
+    }
+}
+
+/* Улучшения для устройств с высокой плотностью пикселей */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .tree-container {
+        -webkit-transform: translateZ(0);
+        -moz-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        -o-transform: translateZ(0);
+        transform: translateZ(0);
+        will-change: transform;
+    }
+}

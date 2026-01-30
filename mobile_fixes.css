@@ -1,0 +1,527 @@
+/* Исправления для мобильных устройств, особенно для маленьких экранов */
+
+/* Улучшения для дерева улучшений на очень маленьких экранах */
+@media (max-width: 400px) {
+    .tree-container {
+        height: 40vh;
+        min-height: 280px;
+        touch-action: none;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .upgrade-tree {
+        min-width: 2000px;
+        min-height: 2000px;
+        transform-origin: 0 0;
+        cursor: grab;
+    }
+
+    .upgrade-node {
+        min-width: 60px;
+        min-height: 60px;
+        width: 60px;
+        height: 60px;
+        padding: 8px;
+        border-radius: 12px;
+    }
+
+    .upgrade-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2em;
+    }
+
+    .upgrade-icon-wrapper {
+        font-size: 0.8em;
+    }
+
+    .upgrade-name {
+        font-size: 0.8em;
+        line-height: 1.2;
+    }
+
+    .upgrade-description {
+        font-size: 0.7em;
+    }
+
+    .upgrade-tooltip {
+        min-width: 200px;
+        font-size: 0.75em;
+        padding: 10px;
+        border-radius: 10px;
+        max-width: 85vw;
+    }
+
+    .tree-controls {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(26, 31, 56, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .tree-stats {
+        display: none; /* Скрываем статистику на самых маленьких экранах */
+    }
+}
+
+@media (max-width: 350px) {
+    .tree-container {
+        height: 38vh;
+        min-height: 250px;
+    }
+
+    .upgrade-tree {
+        min-width: 2200px;
+        min-height: 2200px;
+    }
+
+    .upgrade-node {
+        min-width: 55px;
+        min-height: 55px;
+        width: 55px;
+        height: 55px;
+        padding: 6px;
+    }
+
+    .upgrade-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 1.1em;
+    }
+
+    .upgrade-name {
+        font-size: 0.75em;
+    }
+
+    .upgrade-description {
+        font-size: 0.65em;
+    }
+
+    .upgrade-tooltip {
+        min-width: 180px;
+        font-size: 0.7em;
+        padding: 8px;
+    }
+
+    .tree-stat {
+        font-size: 0.7em;
+    }
+
+    .tree-stat span {
+        font-size: 0.7em;
+    }
+}
+
+@media (max-width: 300px) {
+    .tree-container {
+        height: 35vh;
+        min-height: 220px;
+    }
+
+    .upgrade-tree {
+        min-width: 2500px;
+        min-height: 2500px;
+        transform: scale(0.5);
+        transform-origin: 0 0;
+    }
+
+    .upgrade-node {
+        min-width: 50px;
+        min-height: 50px;
+        width: 50px;
+        height: 50px;
+        padding: 5px;
+    }
+
+    .upgrade-icon {
+        width: 25px;
+        height: 25px;
+        font-size: 1em;
+    }
+
+    .upgrade-name {
+        font-size: 0.7em;
+    }
+
+    .upgrade-description {
+        font-size: 0.6em;
+    }
+
+    .upgrade-tooltip {
+        min-width: 160px;
+        font-size: 0.65em;
+        padding: 6px;
+    }
+
+    .tree-stat {
+        font-size: 0.65em;
+    }
+
+    .tree-stat span {
+        font-size: 0.65em;
+    }
+}
+
+/* Улучшенные стили для перетаскивания на мобильных устройствах */
+.tree-container {
+    touch-action: none; /* Отключаем стандартные жесты для возможности перетаскивания */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Улучшения для панели информации о планете и бустах */
+@media (max-width: 400px) {
+    .resources-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .resource-card {
+        padding: 10px;
+        min-height: 70px;
+    }
+
+    .resource-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 1.1em;
+    }
+
+    .resource-info {
+        margin-left: 8px;
+    }
+
+    .resource-name {
+        font-size: 0.75em;
+    }
+
+    .resource-value {
+        font-size: 0.9em;
+    }
+
+    .clicker-container {
+        padding: 20px;
+        gap: 10px;
+    }
+
+    .planet {
+        width: 150px;
+        height: 150px;
+        margin: 10px auto;
+    }
+
+    .click-button {
+        padding: 12px 18px;
+        font-size: 0.85em;
+        width: 100%;
+        max-width: 220px;
+    }
+
+    .stats-row {
+        gap: 8px;
+    }
+
+    .stat-box {
+        padding: 8px;
+        min-height: 60px;
+    }
+
+    .stat-label {
+        font-size: 0.75em;
+    }
+
+    .stat-value {
+        font-size: 0.95em;
+    }
+
+    .combo-container {
+        margin: 10px auto;
+        max-width: 250px;
+    }
+
+    .combo-display {
+        font-size: 1.3em;
+    }
+
+    .combo-label {
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 350px) {
+    .resources-grid {
+        gap: 6px;
+    }
+
+    .resource-card {
+        padding: 8px;
+        min-height: 65px;
+    }
+
+    .resource-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 1em;
+    }
+
+    .resource-name {
+        font-size: 0.7em;
+    }
+
+    .resource-value {
+        font-size: 0.85em;
+    }
+
+    .planet {
+        width: 140px;
+        height: 140px;
+    }
+
+    .click-button {
+        padding: 10px 15px;
+        font-size: 0.8em;
+        max-width: 200px;
+    }
+
+    .stat-box {
+        padding: 6px;
+        min-height: 55px;
+    }
+
+    .stat-label {
+        font-size: 0.7em;
+    }
+
+    .stat-value {
+        font-size: 0.9em;
+    }
+
+    .combo-display {
+        font-size: 1.2em;
+    }
+
+    .combo-label {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 300px) {
+    .resources-grid {
+        gap: 5px;
+    }
+
+    .resource-card {
+        padding: 6px;
+        min-height: 60px;
+    }
+
+    .resource-icon {
+        width: 25px;
+        height: 25px;
+        font-size: 0.9em;
+    }
+
+    .resource-name {
+        font-size: 0.65em;
+    }
+
+    .resource-value {
+        font-size: 0.8em;
+    }
+
+    .clicker-container {
+        padding: 15px;
+        gap: 8px;
+    }
+
+    .planet {
+        width: 120px;
+        height: 120px;
+    }
+
+    .click-button {
+        padding: 8px 12px;
+        font-size: 0.75em;
+        max-width: 180px;
+    }
+
+    .stat-box {
+        padding: 5px;
+        min-height: 50px;
+    }
+
+    .stat-label {
+        font-size: 0.65em;
+    }
+
+    .stat-value {
+        font-size: 0.85em;
+    }
+
+    .combo-container {
+        max-width: 220px;
+        padding: 8px;
+    }
+
+    .combo-display {
+        font-size: 1.1em;
+    }
+
+    .combo-label {
+        font-size: 0.75em;
+    }
+}
+
+/* Улучшения для навигации на маленьких экранах */
+@media (max-width: 400px) {
+    .nav-panel {
+        gap: 3px;
+        padding: 8px;
+    }
+
+    .nav-btn {
+        min-width: calc(50% - 3px);
+        padding: 10px 5px;
+        margin: 1px;
+        flex: 1 1 calc(50% - 3px);
+    }
+
+    .nav-btn i {
+        font-size: 1.3em;
+    }
+
+    .nav-btn span {
+        font-size: 0.75em;
+    }
+}
+
+/* Улучшения для обработки перетаскивания на мобильных устройствах */
+@media (hover: none) and (pointer: coarse) {
+    .upgrade-node,
+    .upgrade-tree {
+        touch-action: manipulation;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .tree-container {
+        touch-action: none;
+    }
+}
+
+/* Улучшения для интерфейса дерева улучшений на мобильных устройствах */
+.tree-container {
+    cursor: grab;
+}
+
+.tree-container:active {
+    cursor: grabbing;
+}
+
+/* Дополнительные улучшения для очень маленьких экранов */
+@media screen and (max-width: 360px) and (max-height: 700px) {
+    .tree-container {
+        height: 35vh;
+        min-height: 200px;
+    }
+
+    .upgrade-tree {
+        min-width: 3000px;
+        min-height: 3000px;
+        transform: scale(0.4);
+        transform-origin: 0 0;
+    }
+
+    .upgrade-node {
+        min-width: 45px;
+        min-height: 45px;
+        width: 45px;
+        height: 45px;
+        padding: 4px;
+    }
+
+    .upgrade-icon {
+        width: 22px;
+        height: 22px;
+        font-size: 0.9em;
+    }
+
+    .upgrade-name {
+        font-size: 0.65em;
+    }
+
+    .upgrade-description {
+        font-size: 0.55em;
+    }
+
+    .upgrade-tooltip {
+        min-width: 150px;
+        font-size: 0.6em;
+        padding: 5px;
+    }
+
+    .tree-stat {
+        font-size: 0.6em;
+    }
+
+    .tree-stat span {
+        font-size: 0.6em;
+    }
+
+    .resource-card {
+        padding: 5px;
+        min-height: 55px;
+    }
+
+    .resource-icon {
+        width: 22px;
+        height: 22px;
+        font-size: 0.85em;
+    }
+
+    .resource-name {
+        font-size: 0.6em;
+    }
+
+    .resource-value {
+        font-size: 0.75em;
+    }
+
+    .planet {
+        width: 100px;
+        height: 100px;
+    }
+
+    .click-button {
+        padding: 6px 10px;
+        font-size: 0.7em;
+        max-width: 160px;
+    }
+
+    .stat-box {
+        padding: 4px;
+        min-height: 45px;
+    }
+
+    .stat-label {
+        font-size: 0.6em;
+    }
+
+    .stat-value {
+        font-size: 0.8em;
+    }
+
+    .combo-display {
+        font-size: 1em;
+    }
+}
