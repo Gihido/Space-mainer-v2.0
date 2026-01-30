@@ -2831,6 +2831,15 @@ class SpaceMinerGame {
             });
         }
         
+        // Кнопка престижных функций
+        const prestigeFunctionsButton = document.getElementById('prestige-functions-btn');
+        if (prestigeFunctionsButton) {
+            console.log('[setupEventListeners] Найдена кнопка престижных функций, добавление обработчика');
+            prestigeFunctionsButton.addEventListener('click', () => {
+                this.switchSection('prestige-functions');
+            });
+        }
+        
         // Управление игрой
         const saveButton = document.getElementById('save-btn');
         const loadButton = document.getElementById('load-btn');
@@ -3604,11 +3613,12 @@ class SpaceMinerGame {
         const success = this.applyShopEffect(originalItem);
 
         if (success) {
-            // Отмечаем предмет как активный
-            this.state.inventory[itemIndex].active = true;
-            
-            // Добавляем информацию о бусте в активные бусты
-            if (originalItem.duration > 0) {
+            // Проверяем, является ли буст одноразовым (с ограниченной длительностью)
+            if (originalItem.duration && originalItem.duration > 0) {
+                // Для временных бустов отмечаем как активный
+                this.state.inventory[itemIndex].active = true;
+                
+                // Добавляем информацию о бусте в активные бусты
                 const boostInfo = {
                     type: originalItem.effect.type,
                     name: originalItem.name,
@@ -3618,7 +3628,7 @@ class SpaceMinerGame {
                     expires: Date.now() + (originalItem.duration * 1000),
                     startTime: Date.now()
                 };
-                
+
                 // Сохраняем информацию о бусте в зависимости от типа
                 let boostKey = '';
                 switch(originalItem.effect.type) {
@@ -3638,19 +3648,22 @@ class SpaceMinerGame {
                         boostKey = 'goldenClicks';
                         break;
                 }
-                
+
                 if (boostKey) {
                     this.state.shopActiveBoosts[boostKey] = boostInfo;
                 }
+            } else {
+                // Для одноразовых бустов удаляем из инвентаря
+                this.state.inventory.splice(itemIndex, 1);
             }
-            
+
             this.showNotification(`Использовано: ${item.name}`, 'success');
-            
+
             // Создаем анимацию если есть
             if (originalItem.animation) {
                 this.createShopAnimation(originalItem);
             }
-            
+
             this.renderInventory();
             this.renderActiveBoosts();
             this.renderResources();
@@ -6269,6 +6282,12 @@ class SpaceMinerGame {
         } else if (section === 'prestige') {
             console.log('[switchSection] Рендеринг престижа...');
             this.updatePrestigeButton();
+        } else if (section === 'prestige-functions') {
+            console.log('[switchSection] Рендеринг престижных функций...');
+            this.renderPrestigeFunctions();
+        } else if (section === 'info') {
+            console.log('[switchSection] Обновление информационной секции...');
+            this.updateInfoSection();
         }
     }
     
@@ -6677,13 +6696,9 @@ class SpaceMinerGame {
         // Проверяем, является ли устройство мобильным
         const isMobile = window.innerWidth <= 768;
         
-        if (isMobile && !this.state.mobileUpgradePanelOpen) {
-            // На мобильных устройствах сначала показываем панель информации
+        if (isMobile) {
+            // На мобильных устройствах всегда сначала показываем панель информации
             this.showMobileUpgradePanel(upgradeId);
-        } else if (isMobile && this.state.mobileUpgradePanelOpen && this.state.currentMobileUpgradeId === upgradeId) {
-            // Если панель уже открыта для этого улучшения, покупаем его
-            this.buyUpgrade(upgradeId);
-            this.hideMobileUpgradePanel();
         } else {
             // На ПК и других случаях покупаем сразу
             this.buyUpgrade(upgradeId);
