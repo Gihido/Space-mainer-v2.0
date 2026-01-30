@@ -5094,3 +5094,406 @@ body.profile-open {
         min-width: 48px;
     }
 }
+
+/* Стили для мобильных устройств */
+.mobile-only {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-only {
+        display: flex;
+    }
+    
+    /* Стили для секции информации */
+    #info-section .info-content {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    #info-section .info-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    #info-section .info-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    #info-section .info-icon {
+        font-size: 1.5em;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #info-section .info-text {
+        flex: 1;
+    }
+    
+    #info-section .info-name {
+        font-size: 0.9em;
+        color: #aaa;
+        margin-bottom: 5px;
+    }
+    
+    #info-section .info-value {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: white;
+    }
+    
+    #info-section .info-planet-details,
+    #info-section .info-upgrades-summary {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    #info-section .info-planet-details h3,
+    #info-section .info-upgrades-summary h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: #fff;
+        font-size: 1.1em;
+    }
+    
+    /* Стили для престижных функций */
+    #prestige-functions-section,
+    #inventory-section {
+        padding: 20px;
+    }
+    
+    #prestige-functions-section .prestige-functions-grid,
+    #inventory-section .inventory-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+    }
+    
+    .prestige-function-item,
+    .inventory-item {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .prestige-function-item .item-header,
+    .inventory-item .item-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .prestige-function-item .item-icon,
+    .inventory-item .item-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2em;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .prestige-function-item .item-content,
+    .inventory-item .item-content {
+        padding-left: 50px;
+    }
+    
+    .prestige-function-item .item-name,
+    .inventory-item .item-name {
+        font-weight: bold;
+        color: white;
+        margin-bottom: 5px;
+    }
+    
+    .prestige-function-item .item-description,
+    .inventory-item .item-description {
+        color: #ccc;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+    }
+    
+    .prestige-function-item .item-price,
+    .inventory-item .item-price {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 10px;
+    }
+    
+    .prestige-function-item .price-item,
+    .inventory-item .price-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.9em;
+    }
+    
+    .prestige-function-item .item-actions,
+    .inventory-item .item-actions {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .prestige-function-item .buy-btn,
+    .inventory-item .use-btn,
+    .inventory-item .delete-btn {
+        flex: 1;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.2s;
+    }
+    
+    .prestige-function-item .buy-btn {
+        background: #4CAF50;
+        color: white;
+    }
+    
+    .prestige-function-item .buy-btn:hover {
+        background: #45a049;
+    }
+    
+    .prestige-function-item .buy-btn:disabled {
+        background: #666;
+        cursor: not-allowed;
+    }
+    
+    .inventory-item .use-btn {
+        background: #2196F3;
+        color: white;
+    }
+    
+    .inventory-item .delete-btn {
+        background: #f44336;
+        color: white;
+    }
+    
+    .inventory-item .use-btn:hover {
+        background: #1976D2;
+    }
+    
+    .inventory-item .delete-btn:hover {
+        background: #d32f2f;
+    }
+    
+    .back-button {
+        margin-top: 15px;
+        padding: 10px 15px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 1em;
+        width: 100%;
+    }
+    
+    .back-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Адаптация дерева улучшений для мобильных */
+    #upgrades-section {
+        padding: 10px;
+    }
+    
+    .tree-container {
+        min-height: calc(100vh - 200px); /* Учитываем высоту навигации и других элементов */
+    }
+    
+    /* Улучшения для мобильных устройств */
+    .upgrade-node {
+        min-width: 80px;
+        min-height: 80px;
+        padding: 8px;
+    }
+    
+    .upgrade-node .node-icon {
+        font-size: 1.2em;
+        width: 24px;
+        height: 24px;
+    }
+    
+    .upgrade-node .node-name {
+        font-size: 0.75em;
+        line-height: 1.2;
+    }
+    
+    .upgrade-node .node-cost {
+        font-size: 0.7em;
+    }
+}
+
+/* Стили для модальных окон информации об улучшениях для мобильных */
+.mobile-upgrade-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(145deg, #1e1e2f, #2d2d44);
+    border-radius: 15px;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mobile-upgrade-modal .modal-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+.mobile-upgrade-modal .modal-icon {
+    font-size: 1.5em;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-upgrade-modal .modal-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+}
+
+.mobile-upgrade-modal .modal-description {
+    color: #ccc;
+    line-height: 1.4;
+}
+
+.mobile-upgrade-modal .modal-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mobile-upgrade-modal .stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-upgrade-modal .stat-label {
+    color: #aaa;
+}
+
+.mobile-upgrade-modal .stat-value {
+    color: white;
+    font-weight: bold;
+}
+
+.mobile-upgrade-modal .modal-cost {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.mobile-upgrade-modal .cost-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.mobile-upgrade-modal .modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.mobile-upgrade-modal .buy-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+    background: #4CAF50;
+    color: white;
+}
+
+.mobile-upgrade-modal .buy-btn:hover:not(:disabled) {
+    background: #45a049;
+}
+
+.mobile-upgrade-modal .buy-btn:disabled {
+    background: #666;
+    cursor: not-allowed;
+}
+
+.mobile-upgrade-modal .close-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    background: #666;
+    color: white;
+}
+
+.mobile-upgrade-modal .close-btn:hover {
+    background: #555;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    backdrop-filter: blur(5px);
+}
