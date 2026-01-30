@@ -1,0 +1,656 @@
+/* ===== СТИЛИ ДЛЯ ИНВЕНТАРЯ ===== */
+
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.inventory-item {
+    background: linear-gradient(135deg, rgba(26, 31, 56, 0.95), rgba(0, 212, 255, 0.1));
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.inventory-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 212, 255, 0.4);
+    border-color: rgba(0, 212, 255, 0.6);
+}
+
+.inventory-item-icon {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 15px;
+    color: var(--neon-blue);
+}
+
+.inventory-item-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2em;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.inventory-item-description {
+    color: var(--text-dim);
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.inventory-item-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.inventory-item-action-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Exo 2', sans-serif;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+}
+
+.inventory-item-use-btn {
+    background: linear-gradient(135deg, var(--mineral-green), var(--neon-blue));
+    color: white;
+}
+
+.inventory-item-delete-btn {
+    background: linear-gradient(135deg, var(--warning-red), #ff6b6b);
+    color: white;
+}
+
+.inventory-item-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.inventory-item-action-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.inventory-empty {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 1.2em;
+    padding: 40px 20px;
+    grid-column: 1 / -1;
+}
+
+.inventory-empty i {
+    font-size: 3em;
+    margin-bottom: 15px;
+    display: block;
+    color: var(--neon-purple);
+}
+
+/* ===== СТИЛИ ДЛЯ ПРЕСТИЖНЫХ ФУНКЦИЙ ===== */
+
+.prestige-functions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+.prestige-function {
+    background: linear-gradient(135deg, rgba(74, 30, 124, 0.95), rgba(157, 78, 221, 0.2));
+    border-radius: 20px;
+    padding: 25px;
+    border: 2px solid rgba(157, 78, 221, 0.4);
+    box-shadow: 0 10px 40px rgba(157, 78, 221, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.prestige-function::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+    pointer-events: none;
+}
+
+.prestige-function:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 45px rgba(157, 78, 221, 0.5);
+    border-color: rgba(255, 215, 0, 0.6);
+}
+
+.prestige-function.locked {
+    opacity: 0.7;
+    border-color: rgba(255, 71, 87, 0.4);
+}
+
+.prestige-function.locked:hover {
+    transform: none;
+    box-shadow: 0 10px 40px rgba(255, 71, 87, 0.3);
+}
+
+.prestige-function-icon {
+    font-size: 3em;
+    text-align: center;
+    margin-bottom: 15px;
+    color: var(--energy-yellow);
+}
+
+.prestige-function-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3em;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.prestige-function-description {
+    color: var(--text-dim);
+    font-size: 0.95em;
+    margin-bottom: 15px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.prestige-function-cost {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--energy-yellow);
+}
+
+.prestige-function-buy-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--energy-yellow), #ffaa00);
+    color: var(--space-dark);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+}
+
+.prestige-function-buy-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+}
+
+.prestige-function-buy-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.prestige-function-owned {
+    background: linear-gradient(135deg, rgba(0, 255, 141, 0.15), rgba(0, 212, 255, 0.1));
+    border-color: rgba(0, 255, 141, 0.5);
+}
+
+.prestige-function-owned .prestige-function-name {
+    color: var(--mineral-green);
+}
+
+.prestige-function-owned .prestige-function-buy-btn {
+    background: linear-gradient(135deg, var(--mineral-green), var(--neon-blue));
+    color: white;
+    cursor: default;
+}
+
+/* ===== СТИЛИ ДЛЯ МОБИЛЬНОГО РАЗДЕЛА ИНФОРМАЦИИ ===== */
+
+.info-content {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.info-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.info-card {
+    background: linear-gradient(135deg, rgba(26, 31, 56, 0.95), rgba(0, 212, 255, 0.1));
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
+    border-color: rgba(0, 212, 255, 0.6);
+}
+
+.info-icon {
+    font-size: 2em;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--neon-blue);
+}
+
+.info-text {
+    flex: 1;
+}
+
+.info-name {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 600;
+    color: var(--text-dim);
+    margin-bottom: 5px;
+    font-size: 0.95em;
+}
+
+.info-value {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    color: var(--text-light);
+    font-size: 1.2em;
+}
+
+.info-planet-details {
+    background: linear-gradient(135deg, rgba(26, 31, 56, 0.95), rgba(157, 78, 221, 0.1));
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid rgba(157, 78, 221, 0.3);
+    margin-bottom: 20px;
+}
+
+.info-planet-details h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--neon-purple);
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-planet-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2em;
+    color: var(--energy-yellow);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.info-planet-description {
+    color: var(--text-dim);
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.info-upgrades-summary {
+    background: linear-gradient(135deg, rgba(26, 31, 56, 0.95), rgba(0, 255, 141, 0.1));
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid rgba(0, 255, 141, 0.3);
+}
+
+.info-upgrades-summary h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--mineral-green);
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-upgrades-count {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.1em;
+    color: var(--text-light);
+    font-weight: 700;
+    text-align: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+/* ===== МОБИЛЬНЫЕ УЛУЧШЕНИЯ ===== */
+
+/* Скрытие элементов на мобильных устройствах */
+.desktop-only {
+    display: block;
+}
+
+.mobile-only {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .desktop-only {
+        display: none;
+    }
+    
+    .mobile-only {
+        display: block;
+    }
+    
+    /* Улучшенные стили для мобильного дерева улучшений */
+    .upgrade-item {
+        min-width: 120px;
+        min-height: 120px;
+        padding: 12px;
+    }
+    
+    .upgrade-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+    }
+    
+    .upgrade-name {
+        font-size: 0.9em;
+        margin-bottom: 5px;
+    }
+    
+    .upgrade-description {
+        font-size: 0.75em;
+    }
+    
+    .upgrade-cost {
+        font-size: 0.85em;
+    }
+    
+    .upgrade-level {
+        font-size: 0.9em;
+    }
+    
+    /* Стили для адаптивной панели улучшения */
+    .mobile-upgrade-panel {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 400px;
+        background: linear-gradient(135deg, var(--space-dark), var(--space-blue));
+        border-radius: 20px;
+        padding: 25px;
+        border: 2px solid var(--neon-blue);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+        z-index: 10000;
+        display: none;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .mobile-upgrade-panel.active {
+        display: flex;
+    }
+    
+    .mobile-upgrade-header {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    
+    .mobile-upgrade-name {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.4em;
+        color: var(--text-light);
+        margin-bottom: 5px;
+    }
+    
+    .mobile-upgrade-icon {
+        font-size: 2.5em;
+        text-align: center;
+        margin-bottom: 10px;
+        color: var(--neon-blue);
+    }
+    
+    .mobile-upgrade-description {
+        color: var(--text-dim);
+        font-size: 1em;
+        margin-bottom: 15px;
+        text-align: center;
+        line-height: 1.4;
+    }
+    
+    .mobile-upgrade-cost {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 1.1em;
+        font-weight: 600;
+        color: var(--energy-yellow);
+    }
+    
+    .mobile-upgrade-actions {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .mobile-upgrade-buy-btn {
+        flex: 1;
+        padding: 12px;
+        background: linear-gradient(135deg, var(--mineral-green), var(--neon-blue));
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 700;
+        font-family: 'Exo 2', sans-serif;
+        font-size: 1em;
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-upgrade-buy-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
+    }
+    
+    .mobile-upgrade-cancel-btn {
+        flex: 1;
+        padding: 12px;
+        background: linear-gradient(135deg, var(--warning-red), #ff6b6b);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 700;
+        font-family: 'Exo 2', sans-serif;
+        font-size: 1em;
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-upgrade-cancel-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(255, 71, 87, 0.4);
+    }
+    
+    .mobile-upgrade-stats {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 15px;
+        border-radius: 12px;
+        margin-top: 10px;
+    }
+    
+    .mobile-upgrade-stat {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 0.9em;
+    }
+    
+    .mobile-upgrade-stat:last-child {
+        margin-bottom: 0;
+    }
+    
+    /* Модальное затемнение */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        z-index: 9999;
+        display: none;
+    }
+    
+    .modal-overlay.active {
+        display: block;
+    }
+    
+    /* Стили для золотого улучшения */
+    .upgrade-item.gold-upgrade {
+        border: 3px solid gold;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        position: relative;
+    }
+    
+    .upgrade-item.gold-upgrade::before {
+        content: '★';
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        font-size: 1.2em;
+        color: gold;
+        background: var(--space-dark);
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid gold;
+    }
+    
+    /* Улучшенные стили для мобильного дерева улучшений */
+    .tree-container {
+        min-height: 500px;
+    }
+    
+    /* Улучшенные стили для магазина на мобильных */
+    .shop-item {
+        min-height: 150px;
+        padding: 15px;
+    }
+    
+    .shop-item-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5em;
+    }
+    
+    .shop-item-name {
+        font-size: 1.1em;
+    }
+    
+    .shop-item-description {
+        font-size: 0.85em;
+    }
+    
+    .shop-item-price {
+        font-size: 1em;
+    }
+    
+    /* Улучшенные стили для инвентаря на мобильных */
+    .inventory-item {
+        min-height: 180px;
+        padding: 15px;
+    }
+    
+    .inventory-item-icon {
+        font-size: 2em;
+    }
+    
+    .inventory-item-name {
+        font-size: 1.1em;
+    }
+    
+    .inventory-item-description {
+        font-size: 0.85em;
+    }
+    
+    /* Улучшенные стили для престижных функций на мобильных */
+    .prestige-function {
+        min-height: 220px;
+        padding: 20px;
+    }
+    
+    .prestige-function-icon {
+        font-size: 2.5em;
+    }
+    
+    .prestige-function-name {
+        font-size: 1.2em;
+    }
+    
+    .prestige-function-description {
+        font-size: 0.9em;
+    }
+    
+    /* Улучшенные стили для информации на мобильных */
+    .info-card {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .info-icon {
+        margin-bottom: 10px;
+    }
+}
+
+/* ===== УЛУЧШЕННЫЕ СТИЛИ ДЛЯ ПРЕСТИЖНОЙ ЗОЛОТОЙ ВЕТВИ ===== */
+
+.upgrade-item.gold-basic-1 {
+    background: linear-gradient(135deg, rgba(139, 69, 19, 0.2), rgba(255, 215, 0, 0.1));
+    border: 2px solid gold;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.upgrade-item.gold-basic-1 .upgrade-icon {
+    color: gold;
+}
+
+.upgrade-item.gold-basic-1 .upgrade-name {
+    color: gold;
+}
+
+.upgrade-item.gold-basic-1 .upgrade-cost {
+    color: var(--energy-yellow);
+}

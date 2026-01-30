@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="mobile_specific.css">
     <link rel="stylesheet" href="mobile_fixes.css">
     <link rel="stylesheet" href="small_screen_fixes.css">
+    <link rel="stylesheet" href="inventory_prestige_styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
@@ -44,6 +45,14 @@
             <button class="nav-btn" data-section="prestige">
                 <i class="fas fa-star"></i>
                 <span>Престиж</span>
+            </button>
+            <button class="nav-btn" data-section="inventory">
+                <i class="fas fa-backpack"></i>
+                <span>Инвентарь</span>
+            </button>
+            <button class="nav-btn mobile-only" data-section="info">
+                <i class="fas fa-info-circle"></i>
+                <span>Информация</span>
             </button>
             <!-- Кнопка профиля будет добавлена через JS -->
         </nav>
@@ -234,6 +243,13 @@
                         </div>
                     </div>
                     
+                    <div class="prestige-functions">
+                        <button class="prestige-function-button" id="prestige-functions-btn">
+                            <i class="fas fa-cogs"></i>
+                            <span>Престижные функции</span>
+                        </button>
+                    </div>
+                    
                     <button class="prestige-button" id="prestige-button" disabled>
                         <i class="fas fa-rocket"></i>
                         <span>ПРЕСТИЖ</span>
@@ -248,6 +264,127 @@
                     </div>
                 </div>
             </section>
+            
+            <!-- Секция престижных функций -->
+            <section class="content-section" id="prestige-functions-section">
+                <h2><i class="fas fa-cogs"></i> Престижные функции</h2>
+                <div class="prestige-functions-grid" id="prestige-functions-grid">
+                    <!-- Будут заполнены JavaScript -->
+                </div>
+            </section>
+            
+            <!-- Секция инвентаря -->
+            <section class="content-section" id="inventory-section">
+                <h2><i class="fas fa-backpack"></i> Инвентарь</h2>
+                <div class="inventory-grid" id="inventory-grid">
+                    <!-- Будут заполнены JavaScript -->
+                </div>
+            </section>
+
+            <!-- Секция информации для мобильных устройств -->
+            <section class="content-section mobile-only" id="info-section">
+                <h2><i class="fas fa-info-circle"></i> Информация</h2>
+                <div class="info-content">
+                    <div class="info-stats">
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="info-text">
+                                <div class="info-name">Кредиты</div>
+                                <div class="info-value" id="info-credits-value">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <div class="info-text">
+                                <div class="info-name">Минералы</div>
+                                <div class="info-value" id="info-minerals-value">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="info-text">
+                                <div class="info-name">Энергия</div>
+                                <div class="info-value" id="info-energy-value">100/100</div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="info-text">
+                                <div class="info-name">Престиж</div>
+                                <div class="info-value" id="info-prestige-value">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-hand-pointer"></i>
+                            </div>
+                            <div class="info-text">
+                                <div class="info-name">Сила клика</div>
+                                <div class="info-value" id="info-click-power-value">1</div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="info-text">
+                                <div class="info-name">Автоматический доход</div>
+                                <div class="info-value" id="info-auto-income-value">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-planet-details">
+                        <h3>Детали планеты</h3>
+                        <div class="info-planet-name" id="info-planet-name">Базовая планета</div>
+                        <div class="info-planet-description" id="info-planet-description">Без бонусов</div>
+                    </div>
+                    
+                    <div class="info-upgrades-summary">
+                        <h3>Улучшения</h3>
+                        <div class="info-upgrades-count" id="info-upgrades-count">0</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Секция престижных функций -->
+            <section class="content-section" id="prestige-functions-section" style="display: none;">
+                <h2><i class="fas fa-cogs"></i> Престижные функции</h2>
+                <div class="prestige-functions-content">
+                    <div class="prestige-functions-grid" id="prestige-functions-grid">
+                        <!-- Престижные функции будут добавлены через JS -->
+                    </div>
+                </div>
+                <button class="back-button" id="back-from-prestige-functions">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+            </section>
+            
+            <!-- Секция инвентаря -->
+            <section class="content-section" id="inventory-section" style="display: none;">
+                <h2><i class="fas fa-backpack"></i> Инвентарь</h2>
+                <div class="inventory-content">
+                    <div class="inventory-grid" id="inventory-grid">
+                        <!-- Предметы инвентаря будут добавлены через JS -->
+                    </div>
+                </div>
+                <button class="back-button" id="back-from-inventory">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+            </section>
         </main>
 
         <!-- Уведомления -->
@@ -255,6 +392,46 @@
         
         <!-- Таймер кулдауна покупок -->
         <div id="purchase-timer" class="purchase-timer" style="display: none;"></div>
+        
+        <!-- Мобильная панель информации об улучшении -->
+        <div class="modal-overlay" id="mobile-upgrade-overlay"></div>
+        
+        <div class="mobile-upgrade-panel" id="mobile-upgrade-panel">
+            <div class="mobile-upgrade-header">
+                <div class="mobile-upgrade-icon" id="mobile-upgrade-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <div class="mobile-upgrade-name" id="mobile-upgrade-name">Название улучшения</div>
+            </div>
+            
+            <div class="mobile-upgrade-description" id="mobile-upgrade-description">
+                Описание улучшения
+            </div>
+            
+            <div class="mobile-upgrade-cost" id="mobile-upgrade-cost">
+                Цена: <i class="fas fa-coins"></i> 100
+            </div>
+            
+            <div class="mobile-upgrade-stats" id="mobile-upgrade-stats">
+                <div class="mobile-upgrade-stat">
+                    <span>Текущий уровень:</span>
+                    <span id="mobile-upgrade-current-level">0/10</span>
+                </div>
+                <div class="mobile-upgrade-stat">
+                    <span>Эффект:</span>
+                    <span id="mobile-upgrade-effect">+1 к силе клика</span>
+                </div>
+            </div>
+            
+            <div class="mobile-upgrade-actions">
+                <button class="mobile-upgrade-cancel-btn" id="mobile-upgrade-cancel">
+                    Отмена
+                </button>
+                <button class="mobile-upgrade-buy-btn" id="mobile-upgrade-buy">
+                    Купить
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Подключаем скрипты -->

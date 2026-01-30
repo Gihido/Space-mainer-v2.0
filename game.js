@@ -15,6 +15,8 @@ class SpaceMinerGame {
         this.prestigeUpgradesTree = [];
         this.shopItems = [];
         this.achievements = [];
+        this.prestigeFunctions = [];
+        this.inventory = [];
         
         // Переменные для управления
         this.autoSaveInterval = null;
@@ -159,6 +161,16 @@ class SpaceMinerGame {
             lastMouseX: 0,
             lastMouseY: 0,
             
+            // Инвентарь
+            inventory: [],
+            
+            // Престижные функции
+            purchasedPrestigeFunctions: {},
+            
+            // Мобильные улучшения
+            mobileUpgradePanelOpen: false,
+            currentMobileUpgradeId: null,
+            
             // Дата создания
             createdAt: new Date().toISOString(),
             lastPlayed: new Date().toISOString(),
@@ -196,6 +208,25 @@ class SpaceMinerGame {
                 connections: ['basic_1', 'auto_1', 'mining_1', 'energy_1'],
                 currency: 'credits',
                 branch: 'start'
+            },
+            {
+                id: 'gold_basic_1',
+                name: 'Золотой усиленный перфоратор',
+                description: 'Увеличивает мощность клика в 2 раза (бонус к клику)',
+                icon: 'fas fa-gem',
+                basePrice: { credits: 50000, minerals: 100000 },
+                priceMultiplier: 1.0, // Не увеличивается цена
+                effect: { clickPowerMultiplier: 2 },
+                maxLevel: 1,
+                requirements: [{ id: 'basic_4', level: 3 }],
+                unlocked: false,
+                purchased: false,
+                position: { x: -600, y: -450 },
+                level: 5,
+                connections: [],
+                currency: 'mixed',
+                branch: 'gold_basic',
+                isGoldUpgrade: true // Это золотое улучшение
             },
             
             // === ВЕТВЬ БАЗОВЫХ УЛУЧШЕНИЙ ===
@@ -531,14 +562,14 @@ class SpaceMinerGame {
             this.unlockPrestigeUpgrades();
         }
 
-        // Магазин улучшений с бустами и анимациями
+        // Магазин улучшений с бустами и анимациями (увеличенные цены)
         this.shopItems = [
             {
                 id: 'shop_1',
                 name: 'Энергетический напиток',
                 description: 'Восстанавливает 50% энергии',
                 icon: 'fas fa-wine-bottle',
-                price: 100,
+                price: 500, // Увеличена цена
                 effect: { 
                     type: 'energy', 
                     value: 50 
@@ -554,7 +585,7 @@ class SpaceMinerGame {
                 name: 'Взрывной коктейль',
                 description: 'Следующий клик x10 на 5 секунд',
                 icon: 'fas fa-glass-cheers',
-                price: 250,
+                price: 1250, // Увеличена цена
                 effect: { 
                     type: 'temporaryMultiplier', 
                     value: 10,
@@ -571,7 +602,7 @@ class SpaceMinerGame {
                 name: 'Золотые руки',
                 description: 'Следующие 25 кликов x3',
                 icon: 'fas fa-medal',
-                price: 500,
+                price: 2500, // Увеличена цена
                 effect: { 
                     type: 'goldenClicks', 
                     value: 25, 
@@ -588,7 +619,7 @@ class SpaceMinerGame {
                 name: 'Буст производительности',
                 description: 'Автоматический доход x3 на 60 секунд',
                 icon: 'fas fa-rocket',
-                price: 1000,
+                price: 5000, // Увеличена цена
                 effect: { 
                     type: 'autoBoost', 
                     value: 3, 
@@ -605,7 +636,7 @@ class SpaceMinerGame {
                 name: 'Кристальный удач',
                 description: 'Шанс минералов x3 на 30 секунд',
                 icon: 'fas fa-dice',
-                price: 750,
+                price: 3750, // Увеличена цена
                 effect: { 
                     type: 'mineralBoost', 
                     value: 3, 
@@ -622,7 +653,7 @@ class SpaceMinerGame {
                 name: 'Комбо-стимулятор',
                 description: 'Комбо падает на 50% медленнее на 45 секунд',
                 icon: 'fas fa-chart-line',
-                price: 600,
+                price: 3000, // Увеличена цена
                 effect: { 
                     type: 'comboBoost', 
                     value: 0.5, 
@@ -633,6 +664,23 @@ class SpaceMinerGame {
                 category: 'combo',
                 animation: 'combo-stimulator',
                 duration: 45
+            }
+        ];
+
+        // Престижные функции
+        this.prestigeFunctions = [
+            {
+                id: 'golden_click_upgrade',
+                name: 'Золотая ветвь улучшения клика',
+                description: 'Даёт золотое улучшение, которое стоит 50 минералов и 100,000 кредитов. Улучшение даёт буст x2 к силе клика и может быть куплено только один раз. Не сбрасывается при престиже.',
+                icon: 'fas fa-gem',
+                price: 5, // Стоимость в престижных монетах
+                currency: 'prestige',
+                oneTime: true,
+                effect: {
+                    type: 'goldenClickUpgrade',
+                    description: 'Золотое улучшение клика: x2 к силе клика'
+                }
             }
         ];
         
@@ -3435,27 +3483,145 @@ class SpaceMinerGame {
         this.state.lastPurchaseTime = Date.now();
         this.state.credits -= item.price;
         
-        // Применяем эффект предмета
-        const success = this.applyShopEffect(item);
+        // Добавляем предмет в инвентарь вместо немедленной активации
+        const inventoryItem = {
+            id: item.id + '_' + Date.now(), // уникальный ID
+            originalId: item.id,
+            name: item.name,
+            description: item.description,
+            icon: item.icon,
+            effect: item.effect,
+            category: item.category,
+            animation: item.animation,
+            duration: item.duration,
+            cooldown: item.cooldown,
+            price: item.price,
+            purchasedAt: Date.now(),
+            active: false
+        };
         
+        this.state.inventory.push(inventoryItem);
+        
+        this.state.shopCooldowns[itemId] = Date.now() + (item.cooldown * 1000);
+        
+        this.showNotification(`Добавлено в инвентарь: ${item.name}`, 'success');
+        
+        // Создаем анимацию если есть
+        if (item.animation) {
+            this.createShopAnimation(item);
+        }
+        
+        this.renderResources();
+        this.renderShop();
+        this.renderInventory(); // Обновляем инвентарь
+        console.log(`[buyShopItem] Предмет добавлен в инвентарь: ${itemId} за ${item.price} кредитов`);
+        return true;
+    }
+
+    // ===== СИСТЕМА ИНВЕНТАРЯ =====
+    
+    renderInventory() {
+        if (!this.currentUser) return;
+
+        console.log('[renderInventory] Рендеринг инвентаря...');
+        const container = document.getElementById('inventory-grid');
+        if (!container) {
+            console.error('[renderInventory] Контейнер инвентаря не найден');
+            return;
+        }
+
+        if (!this.state.inventory || this.state.inventory.length === 0) {
+            container.innerHTML = `
+                <div class="inventory-empty">
+                    <i class="fas fa-backpack"></i>
+                    <div>Ваш инвентарь пуст</div>
+                    <div>Купите предметы в магазине, чтобы добавить их сюда</div>
+                </div>
+            `;
+            return;
+        }
+
+        let html = '';
+
+        for (const item of this.state.inventory) {
+            const originalItem = this.shopItems.find(i => i.id === item.originalId);
+            if (!originalItem) continue;
+
+            html += `
+                <div class="inventory-item" data-item-id="${item.id}">
+                    <div class="inventory-item-icon">
+                        <i class="${item.icon}"></i>
+                    </div>
+                    <div class="inventory-item-name">${item.name}</div>
+                    <div class="inventory-item-description">${item.description}</div>
+                    <div class="inventory-item-actions">
+                        <button class="inventory-item-action-btn inventory-item-use-btn" 
+                                onclick="window.game.useInventoryItem('${item.id}')" 
+                                ${item.active ? 'disabled' : ''}>
+                            <i class="fas fa-play"></i> Использовать
+                        </button>
+                        <button class="inventory-item-action-btn inventory-item-delete-btn" 
+                                onclick="window.game.deleteInventoryItem('${item.id}')">
+                            <i class="fas fa-trash"></i> Удалить
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        container.innerHTML = html;
+        console.log('[renderInventory] Инвентарь отрисован, количество предметов:', this.state.inventory.length);
+    }
+
+    useInventoryItem(itemId) {
+        if (!this.currentUser) return;
+
+        console.log('[useInventoryItem] Использование предмета инвентаря:', itemId);
+        
+        const itemIndex = this.state.inventory.findIndex(item => item.id === itemId);
+        if (itemIndex === -1) {
+            console.error('[useInventoryItem] Предмет не найден в инвентаре:', itemId);
+            this.showNotification('Предмет не найден!', 'error');
+            return;
+        }
+
+        const item = this.state.inventory[itemIndex];
+        const originalItem = this.shopItems.find(i => i.id === item.originalId);
+
+        if (!originalItem) {
+            console.error('[useInventoryItem] Оригинальный предмет не найден:', item.originalId);
+            this.showNotification('Ошибка предмета!', 'error');
+            return;
+        }
+
+        // Проверяем кулдаун
+        if (!this.checkPurchaseCooldown()) {
+            console.log('[useInventoryItem] Кулдаун активен');
+            return false;
+        }
+
+        // Применяем эффект предмета
+        const success = this.applyShopEffect(originalItem);
+
         if (success) {
-            this.state.shopCooldowns[itemId] = Date.now() + (item.cooldown * 1000);
+            // Отмечаем предмет как активный
+            this.state.inventory[itemIndex].active = true;
             
             // Добавляем информацию о бусте в активные бусты
-            if (item.duration > 0) {
+            if (originalItem.duration > 0) {
                 const boostInfo = {
-                    type: item.effect.type,
-                    name: item.name,
-                    icon: item.icon,
-                    multiplier: item.effect.value || 1,
-                    duration: item.duration,
-                    expires: Date.now() + (item.duration * 1000),
+                    type: originalItem.effect.type,
+                    name: originalItem.name,
+                    icon: originalItem.icon,
+                    multiplier: originalItem.effect.value || 1,
+                    duration: originalItem.duration,
+                    expires: Date.now() + (originalItem.duration * 1000),
                     startTime: Date.now()
                 };
                 
                 // Сохраняем информацию о бусте в зависимости от типа
                 let boostKey = '';
-                switch(item.effect.type) {
+                switch(originalItem.effect.type) {
                     case 'temporaryMultiplier':
                         boostKey = 'tempClickMultiplier';
                         break;
@@ -3478,21 +3644,187 @@ class SpaceMinerGame {
                 }
             }
             
-            this.showNotification(`Куплено: ${item.name}`, 'success');
+            this.showNotification(`Использовано: ${item.name}`, 'success');
             
             // Создаем анимацию если есть
-            if (item.animation) {
-                this.createShopAnimation(item);
+            if (originalItem.animation) {
+                this.createShopAnimation(originalItem);
             }
             
-            this.renderResources();
-            this.renderShop();
+            this.renderInventory();
             this.renderActiveBoosts();
-            console.log(`[buyShopItem] Предмет куплен: ${itemId} за ${item.price} кредитов`);
+            this.renderResources();
+            console.log(`[useInventoryItem] Предмет использован: ${itemId}`);
             return true;
         }
         
         return false;
+    }
+
+    deleteInventoryItem(itemId) {
+        if (!this.currentUser) return;
+
+        console.log('[deleteInventoryItem] Удаление предмета инвентаря:', itemId);
+
+        if (confirm('Вы уверены, что хотите удалить этот предмет из инвентаря?')) {
+            const itemIndex = this.state.inventory.findIndex(item => item.id === itemId);
+            if (itemIndex === -1) {
+                console.error('[deleteInventoryItem] Предмет не найден в инвентаре:', itemId);
+                this.showNotification('Предмет не найден!', 'error');
+                return;
+            }
+
+            const item = this.state.inventory[itemIndex];
+            this.state.inventory.splice(itemIndex, 1);
+
+            this.showNotification(`Предмет удалён: ${item.name}`, 'info');
+
+            this.renderInventory();
+            console.log(`[deleteInventoryItem] Предмет удалён: ${itemId}`);
+        }
+    }
+
+    // ===== ПРЕСТИЖНЫЕ ФУНКЦИИ =====
+    
+    renderPrestigeFunctions() {
+        if (!this.currentUser) return;
+
+        console.log('[renderPrestigeFunctions] Рендеринг престижных функций...');
+        const container = document.getElementById('prestige-functions-grid');
+        if (!container) {
+            console.error('[renderPrestigeFunctions] Контейнер престижных функций не найден');
+            return;
+        }
+
+        let html = '';
+
+        for (const func of this.prestigeFunctions) {
+            const owned = this.state.purchasedPrestigeFunctions[func.id] || false;
+            const canBuy = !owned && this.state.prestige >= func.price;
+
+            html += `
+                <div class="prestige-function ${owned ? 'owned' : (canBuy ? '' : 'locked')}" data-function-id="${func.id}">
+                    <div class="prestige-function-icon">
+                        <i class="${func.icon}"></i>
+                    </div>
+                    <div class="prestige-function-name">${func.name}</div>
+                    <div class="prestige-function-description">${func.description}</div>
+                    <div class="prestige-function-cost">
+                        Цена: ${func.price} престижных монет
+                    </div>
+                    <button class="prestige-function-buy-btn" 
+                            onclick="window.game.buyPrestigeFunction('${func.id}')" 
+                            ${owned || !canBuy ? 'disabled' : ''}>
+                        ${owned ? 'Куплено' : (canBuy ? 'Купить' : 'Недостаточно')}
+                    </button>
+                </div>
+            `;
+        }
+
+        container.innerHTML = html;
+        console.log('[renderPrestigeFunctions] Престижные функции отрисованы');
+    }
+
+    buyPrestigeFunction(functionId) {
+        if (!this.currentUser) return;
+
+        console.log('[buyPrestigeFunction] Покупка престижной функции:', functionId);
+
+        const func = this.prestigeFunctions.find(f => f.id === functionId);
+        if (!func) {
+            console.error('[buyPrestigeFunction] Функция не найдена:', functionId);
+            this.showNotification('Функция не найдена!', 'error');
+            return;
+        }
+
+        if (this.state.purchasedPrestigeFunctions[functionId]) {
+            console.error('[buyPrestigeFunction] Функция уже куплена:', functionId);
+            this.showNotification('Функция уже куплена!', 'warning');
+            return;
+        }
+
+        if (this.state.prestige < func.price) {
+            console.error('[buyPrestigeFunction] Недостаточно престижных монет:', this.state.prestige, 'нужно:', func.price);
+            this.showNotification(`Недостаточно престижных монет! Нужно: ${func.price}`, 'warning');
+            return;
+        }
+
+        // Покупаем функцию
+        this.state.prestige -= func.price;
+        this.state.purchasedPrestigeFunctions[functionId] = true;
+
+        // Применяем эффект функции
+        this.applyPrestigeFunctionEffect(func);
+
+        this.showNotification(`Куплена функция: ${func.name}`, 'success');
+
+        this.renderResources();
+        this.renderPrestigeFunctions();
+        this.renderPrestigeButton();
+
+        // Если это золотое улучшение клика, добавляем его в дерево улучшений
+        if (functionId === 'golden_click_upgrade') {
+            this.addGoldenClickUpgrade();
+        }
+
+        console.log(`[buyPrestigeFunction] Функция куплена: ${functionId} за ${func.price} престижных монет`);
+    }
+
+    applyPrestigeFunctionEffect(func) {
+        console.log('[applyPrestigeFunctionEffect] Применение эффекта функции:', func.id);
+        
+        // В зависимости от типа функции применяем эффект
+        switch(func.id) {
+            case 'golden_click_upgrade':
+                // Эффект будет применен через добавление улучшения в дерево
+                break;
+            default:
+                console.warn('[applyPrestigeFunctionEffect] Неизвестная функция:', func.id);
+        }
+    }
+
+    addGoldenClickUpgrade() {
+        console.log('[addGoldenClickUpgrade] Добавление золотого улучшения клика...');
+        
+        // Проверяем, не добавлено ли уже золотое улучшение
+        const existingUpgrade = this.upgradesTree.find(u => u.id === 'gold_basic_1_new');
+        if (existingUpgrade) {
+            console.log('[addGoldenClickUpgrade] Золотое улучшение уже существует');
+            return;
+        }
+
+        // Добавляем новое золотое улучшение в дерево
+        const goldenUpgrade = {
+            id: 'gold_basic_1_new',
+            name: 'Золотой усиленный перфоратор',
+            description: 'Увеличивает мощность клика в 2 раза (бонус к клику)',
+            icon: 'fas fa-gem',
+            basePrice: { credits: 100000, minerals: 50 }, // 100,000 кредитов и 50 минералов
+            priceMultiplier: 1.0, // Не увеличивается цена
+            effect: { clickPowerMultiplier: 2 },
+            maxLevel: 1,
+            requirements: [{ id: 'basic_4', level: 3 }],
+            unlocked: true, // Разблокировано сразу после покупки
+            purchased: true, // Покупается автоматически при получении
+            position: { x: -700, y: -450 }, // Положение рядом с обычным улучшением
+            level: 1,
+            connections: [],
+            currency: 'mixed',
+            branch: 'gold_basic',
+            isGoldUpgrade: true, // Это золотое улучшение
+            oneTime: true // Можно купить только один раз
+        };
+
+        // Добавляем улучшение в дерево
+        this.upgradesTree.push(goldenUpgrade);
+
+        // Отмечаем как купленное в состоянии
+        this.state.upgrades['gold_basic_1_new'] = 1;
+
+        // Применяем эффект улучшения
+        this.applyUpgradeEffect(goldenUpgrade);
+
+        console.log('[addGoldenClickUpgrade] Золотое улучшение добавлено и активировано');
     }
     
     // ===== ПРЕСТИЖНЫЕ УЛУЧШЕНИЯ =====
@@ -6178,6 +6510,350 @@ class SpaceMinerGame {
         this.renderAll();
         this.showNotification('Текущий пользователь сброшен', 'info');
         this.saveGame();
+    }
+    
+    // ===== ФУНКЦИИ ДЛЯ МОБИЛЬНОЙ ПАНЕЛИ УЛУЧШЕНИЙ =====
+    
+    showMobileUpgradePanel(upgradeId) {
+        console.log('[showMobileUpgradePanel] Открытие мобильной панели для улучшения:', upgradeId);
+        
+        const upgrade = this.upgradesTree.find(u => u.id === upgradeId);
+        if (!upgrade) {
+            console.error('[showMobileUpgradePanel] Улучшение не найдено:', upgradeId);
+            return;
+        }
+        
+        const currentLevel = this.state.upgrades[upgradeId] || 0;
+        
+        // Проверяем, достигнут ли максимальный уровень
+        if (currentLevel >= upgrade.maxLevel) {
+            this.showNotification('Максимальный уровень достигнут!', 'info');
+            return;
+        }
+        
+        // Обновляем информацию в панели
+        const panel = document.getElementById('mobile-upgrade-panel');
+        const overlay = document.getElementById('mobile-upgrade-overlay');
+        const nameElement = document.getElementById('mobile-upgrade-name');
+        const iconElement = document.getElementById('mobile-upgrade-icon');
+        const descElement = document.getElementById('mobile-upgrade-description');
+        const costElement = document.getElementById('mobile-upgrade-cost');
+        const currentLevelElement = document.getElementById('mobile-upgrade-current-level');
+        const effectElement = document.getElementById('mobile-upgrade-effect');
+        
+        // Обновляем содержимое
+        nameElement.textContent = upgrade.name;
+        descElement.textContent = upgrade.description;
+        currentLevelElement.textContent = `${currentLevel}/${upgrade.maxLevel}`;
+        
+        // Обновляем иконку
+        const iconClass = upgrade.icon || 'fas fa-gem';
+        iconElement.innerHTML = `<i class="${iconClass}"></i>`;
+        
+        // Рассчитываем цену и отображаем её
+        let price;
+        let priceDisplay = '';
+        
+        if (upgrade.currency === 'mixed') {
+            const upgradePrice = this.calculateUpgradePrice(upgrade, currentLevel);
+            priceDisplay = `<i class="fas fa-coins"></i> ${this.formatNumber(upgradePrice.credits)} + <i class="fas fa-gem"></i> ${this.formatNumber(upgradePrice.minerals)}`;
+        } else {
+            const upgradePrice = this.calculateUpgradePrice(upgrade, currentLevel);
+            const currencyIcon = upgrade.currency === 'minerals' ? 'fa-gem' : 'fa-coins';
+            priceDisplay = `<i class="fas ${currencyIcon}"></i> ${this.formatNumber(upgradePrice)}`;
+        }
+        
+        costElement.innerHTML = `Цена: ${priceDisplay}`;
+        
+        // Отображаем эффект улучшения
+        let effectText = '';
+        if (upgrade.effect) {
+            for (const [key, value] of Object.entries(upgrade.effect)) {
+                switch(key) {
+                    case 'clickPower':
+                        effectText = `+${value} к силе клика`;
+                        break;
+                    case 'clickPowerMultiplier':
+                        effectText = `x${value} к силе клика`;
+                        break;
+                    case 'autoIncome':
+                        effectText = `+${value} к автоматическому доходу`;
+                        break;
+                    case 'maxEnergy':
+                        effectText = `+${value} к максимальной энергии`;
+                        break;
+                    case 'energyRegen':
+                        effectText = `+${value} к регенерации энергии`;
+                        break;
+                    case 'mineralChance':
+                        effectText = `+${(value * 100).toFixed(1)}% к шансу минералов`;
+                        break;
+                    default:
+                        effectText = `${key}: ${value}`;
+                        break;
+                }
+                break; // Показываем только первый эффект
+            }
+        }
+        effectElement.textContent = effectText || 'Эффект не определён';
+        
+        // Показываем панель
+        overlay.classList.add('active');
+        panel.classList.add('active');
+        
+        // Сохраняем ID улучшения для последующей покупки
+        this.state.currentMobileUpgradeId = upgradeId;
+        this.state.mobileUpgradePanelOpen = true;
+        
+        // Добавляем обработчики событий
+        this.setupMobileUpgradePanelEvents();
+    }
+    
+    hideMobileUpgradePanel() {
+        console.log('[hideMobileUpgradePanel] Закрытие мобильной панели');
+        
+        const panel = document.getElementById('mobile-upgrade-panel');
+        const overlay = document.getElementById('mobile-upgrade-overlay');
+        
+        overlay.classList.remove('active');
+        panel.classList.remove('active');
+        
+        this.state.mobileUpgradePanelOpen = false;
+        this.state.currentMobileUpgradeId = null;
+        
+        // Удаляем обработчики событий
+        this.cleanupMobileUpgradePanelEvents();
+    }
+    
+    setupMobileUpgradePanelEvents() {
+        // Обработчик кнопки покупки
+        const buyBtn = document.getElementById('mobile-upgrade-buy');
+        const cancelBtn = document.getElementById('mobile-upgrade-cancel');
+        
+        if (buyBtn) {
+            buyBtn.onclick = () => {
+                if (this.state.currentMobileUpgradeId) {
+                    this.buyUpgrade(this.state.currentMobileUpgradeId);
+                    this.hideMobileUpgradePanel();
+                }
+            };
+        }
+        
+        if (cancelBtn) {
+            cancelBtn.onclick = () => {
+                this.hideMobileUpgradePanel();
+            };
+        }
+        
+        // Обработчик для оверлея (закрытие при клике вне панели)
+        const overlay = document.getElementById('mobile-upgrade-overlay');
+        if (overlay) {
+            overlay.onclick = (e) => {
+                if (e.target === overlay) {
+                    this.hideMobileUpgradePanel();
+                }
+            };
+        }
+    }
+    
+    cleanupMobileUpgradePanelEvents() {
+        const buyBtn = document.getElementById('mobile-upgrade-buy');
+        const cancelBtn = document.getElementById('mobile-upgrade-cancel');
+        const overlay = document.getElementById('mobile-upgrade-overlay');
+        
+        if (buyBtn) {
+            buyBtn.onclick = null;
+        }
+        if (cancelBtn) {
+            cancelBtn.onclick = null;
+        }
+        if (overlay) {
+            overlay.onclick = null;
+        }
+    }
+    
+    // Модифицируем функцию покупки улучшения для мобильных устройств
+    handleUpgradeClick(upgradeId) {
+        // Проверяем, является ли устройство мобильным
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile && !this.state.mobileUpgradePanelOpen) {
+            // На мобильных устройствах сначала показываем панель информации
+            this.showMobileUpgradePanel(upgradeId);
+        } else if (isMobile && this.state.mobileUpgradePanelOpen && this.state.currentMobileUpgradeId === upgradeId) {
+            // Если панель уже открыта для этого улучшения, покупаем его
+            this.buyUpgrade(upgradeId);
+            this.hideMobileUpgradePanel();
+        } else {
+            // На ПК и других случаях покупаем сразу
+            this.buyUpgrade(upgradeId);
+        }
+    }
+    
+    // ===== ФУНКЦИИ ДЛЯ ИНФОРМАЦИОННОГО РАЗДЕЛА =====
+    
+    updateInfoSection() {
+        if (!this.state) return;
+        
+        // Обновляем значения в информационном разделе
+        const creditsValue = document.getElementById('info-credits-value');
+        const mineralsValue = document.getElementById('info-minerals-value');
+        const energyValue = document.getElementById('info-energy-value');
+        const prestigeValue = document.getElementById('info-prestige-value');
+        const clickPowerValue = document.getElementById('info-click-power-value');
+        const autoIncomeValue = document.getElementById('info-auto-income-value');
+        const planetName = document.getElementById('info-planet-name');
+        const planetDescription = document.getElementById('info-planet-description');
+        const upgradesCount = document.getElementById('info-upgrades-count');
+        
+        if (creditsValue) creditsValue.textContent = this.formatNumber(this.state.credits);
+        if (mineralsValue) mineralsValue.textContent = this.formatNumber(this.state.minerals);
+        if (energyValue) energyValue.textContent = `${Math.floor(this.state.energy)}/${this.state.maxEnergy}`;
+        if (prestigeValue) prestigeValue.textContent = this.state.prestige;
+        if (clickPowerValue) clickPowerValue.textContent = this.formatNumber(this.getTotalClickPower());
+        if (autoIncomeValue) autoIncomeValue.textContent = this.formatNumber(this.getTotalAutoIncome());
+        
+        // Обновляем информацию о планете
+        const theme = this.planetThemes[this.currentPlanetTheme] || this.planetThemes.default;
+        if (planetName) planetName.textContent = theme.name;
+        if (planetDescription) planetDescription.textContent = theme.boostText;
+        
+        // Подсчитываем количество купленных улучшений
+        const boughtUpgrades = Object.keys(this.state.upgrades).filter(id => this.state.upgrades[id] > 0).length;
+        if (upgradesCount) upgradesCount.textContent = `${boughtUpgrades} улучшений куплено`;
+    }
+    
+    // ===== УЛУЧШЕНИЯ ДЛЯ МАГАЗИНА (БУСТЫ ПЕРЕХОДЯТ В ИНВЕНТАРЬ) =====
+    
+    buyShopItem(itemId) {
+        if (!this.currentUser) {
+            this.showNotification('Сначала войдите в игру!', 'warning');
+            return;
+        }
+
+        const item = this.shopItems.find(i => i.id === itemId);
+        if (!item) {
+            this.showNotification('Товар не найден!', 'error');
+            return;
+        }
+
+        // Проверяем кулдаун
+        if (!this.checkPurchaseCooldown()) {
+            return;
+        }
+
+        // Проверяем, есть ли уже активный кулдаун на этот товар
+        const now = Date.now();
+        const cooldownKey = `shop_${itemId}`;
+        if (this.state.shopCooldowns[cooldownKey] && 
+            this.state.shopCooldowns[cooldownKey] > now) {
+            const remaining = Math.ceil((this.state.shopCooldowns[cooldownKey] - now) / 1000);
+            this.showNotification(`Подождите ${remaining} сек. до следующей покупки!`, 'warning');
+            return;
+        }
+
+        // Проверяем, достаточно ли ресурсов
+        if (this.state.credits < item.price) {
+            this.showNotification(`Недостаточно кредитов! Нужно: ${item.price}`, 'warning');
+            return;
+        }
+
+        // Покупаем
+        this.state.credits -= item.price;
+
+        // Вместо активации буста сразу, добавляем его в инвентарь
+        const inventoryItem = {
+            id: `${itemId}_${Date.now()}`,
+            originalId: itemId,
+            name: item.name,
+            description: item.description,
+            icon: item.icon,
+            effect: item.effect,
+            duration: item.duration,
+            type: 'boost',
+            timestamp: Date.now()
+        };
+
+        this.state.inventory.push(inventoryItem);
+
+        // Устанавливаем кулдаун
+        this.state.shopCooldowns[cooldownKey] = now + item.cooldown;
+        this.state.lastPurchaseTime = now;
+
+        this.renderResources();
+        this.renderShop();
+        this.renderInventory(); // Обновляем инвентарь
+        this.saveGame();
+
+        this.showNotification(`Куплено: ${item.name}! Предмет добавлен в инвентарь.`, 'success');
+    }
+    
+    // ===== УВЕЛИЧЕНИЕ СТОИМОСТИ БУСТОВ =====
+    
+    initShopItems() {
+        console.log('[initShopItems] Инициализация магазина с увеличенными ценами');
+        this.shopItems = [
+            {
+                id: 'double_click_x2',
+                name: 'Удвоитель кликов x2',
+                description: 'Удваивает силу всех кликов на 30 секунд',
+                icon: 'fas fa-hand-point-up',
+                price: 1000000, // Увеличена цена
+                cooldown: 5 * 60 * 1000, // 5 минут
+                duration: 30 * 1000, // 30 секунд
+                effect: { multiplier: 2, type: 'click' }
+            },
+            {
+                id: 'triple_click_x3',
+                name: 'Утроитель кликов x3',
+                description: 'Утраивает силу всех кликов на 30 секунд',
+                icon: 'fas fa-hand-sparkles',
+                price: 5000000, // Увеличена цена
+                cooldown: 10 * 60 * 1000, // 10 минут
+                duration: 30 * 1000, // 30 секунд
+                effect: { multiplier: 3, type: 'click' }
+            },
+            {
+                id: 'auto_miner_2x',
+                name: 'Автомайнер x2',
+                description: 'Удваивает автоматический доход на 60 секунд',
+                icon: 'fas fa-robot',
+                price: 2500000, // Увеличена цена
+                cooldown: 8 * 60 * 1000, // 8 минут
+                duration: 60 * 1000, // 60 секунд
+                effect: { multiplier: 2, type: 'auto' }
+            },
+            {
+                id: 'lucky_doubler',
+                name: 'Везучий удвоитель',
+                description: 'Удваивает шанс двойного клика на 60 секунд',
+                icon: 'fas fa-dice',
+                price: 1500000, // Увеличена цена
+                cooldown: 6 * 60 * 1000, // 6 минут
+                duration: 60 * 1000, // 60 секунд
+                effect: { multiplier: 2, type: 'double' }
+            },
+            {
+                id: 'energy_saver_50',
+                name: 'Энергосберегатель',
+                description: 'Сохраняет 50% энергии при использовании на 45 секунд',
+                icon: 'fas fa-battery-full',
+                price: 2000000, // Увеличена цена
+                cooldown: 7 * 60 * 1000, // 7 минут
+                duration: 45 * 1000, // 45 секунд
+                effect: { multiplier: 0.5, type: 'energy_save' }
+            },
+            {
+                id: 'mineral_booster',
+                name: 'Минеральный усилитель',
+                description: 'Удваивает шанс получения минералов на 60 секунд',
+                icon: 'fas fa-gem',
+                price: 3000000, // Увеличена цена
+                cooldown: 9 * 60 * 1000, // 9 минут
+                duration: 60 * 1000, // 60 секунд
+                effect: { multiplier: 2, type: 'mineral' }
+            }
+        ];
     }
 }
 
